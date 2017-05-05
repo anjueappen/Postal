@@ -5,6 +5,7 @@ var WebpackNotifierPlugin = require('webpack-notifier');
 module.exports = {
   devtool: 'eval',
   // This will be our app's entry point (webpack will look for it in the 'src' directory due to the modulesDirectory setting below). Feel free to change as desired.
+  // Anju chnsged 'index.tsx' --> './src/index.tsx' for webpack to find entry point
   entry: [
     './src/index.tsx'
   ],
