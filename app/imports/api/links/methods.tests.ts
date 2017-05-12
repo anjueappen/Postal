@@ -2,10 +2,10 @@
 //
 // https://guide.meteor.com/testing.html
 
-import { Meteor } from 'meteor/meteor';
+import { Meteor } from "meteor/meteor";
 import { assert } from 'meteor/practicalmeteor:chai';
-import { Links } from './links.js';
-import './methods.js';
+import { Links } from './links';
+import './methods';
 
 if (Meteor.isServer) {
   describe('links methods', function () {
