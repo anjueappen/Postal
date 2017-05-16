@@ -1388,7 +1388,7 @@ declare module "meteor/meteor" {
   }
 }
 
-declare module Mongo {
+declare module ƒ {
   interface Selector {
     [key: string]: any;
   }
@@ -2103,4 +2103,28 @@ declare module "meteor/meteor" {
     var isTest: boolean;
     /** Global props **/
   }
+}
+
+
+// Custom Simple Schema Interfaces https://github.com/aldeed/meteor-simple-schema/issues/610
+declare module SimpleSchemaModule {
+    interface SimpleSchemaDefinition {
+        [attribute: string]: {[props: string]: any}
+    }
+    export interface SimpleSchema {
+        new(definition: SimpleSchemaDefinition): SimpleSchema;
+        extendOptions(options: {[options: string]: any}): void;
+        validate(object:any):void;
+    }
+
+}
+
+declare module 'meteor/simple-schema' {
+    export var SimpleSchema:{
+        new(definition: SimpleSchemaModule.SimpleSchemaDefinition):SimpleSchemaModule.SimpleSchema;
+        RegEx: {
+            Url: RegExp,
+            Email: RegExp
+        }
+    };
 }
