@@ -18,3 +18,14 @@ export const AddressSchema = new SimpleSchema({
     regEx: /^[0-9]{5}$/
   }
 });
+
+export const LatLonSchema = new SimpleSchema({
+  latitude:{
+    type: String,
+    label: "Latiude"
+  },
+  longitude:{
+    type: String,
+    label: "Longitude"
+  }
+});

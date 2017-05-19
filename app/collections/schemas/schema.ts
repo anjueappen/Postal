@@ -1,4 +1,5 @@
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
+import {AddressSchema} from './utils';
 
 export const Schema = {
   UserProfile: new SimpleSchema({
@@ -17,7 +18,7 @@ export const Schema = {
       password:{
           type: String,
           label: "User Phone",
-      },
+      }
   }),
 
   PostItem: new SimpleSchema({
@@ -37,8 +38,14 @@ export const Schema = {
         type: this.UserProfile,
         label: "Post Deliverer Profile"
       },
-
+      source:{
+        type:AddressSchema,
+        label: "Source Location"
+      },
+      destination:{
+        type: AddressSchema,
+        label: "Destination Location"
+      }
   }),
-
 
 };
