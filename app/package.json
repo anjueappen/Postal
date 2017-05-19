@@ -5,11 +5,19 @@
     "start": "meteor run"
   },
   "dependencies": {
+    "@types/es6-shim": "^0.31.33",
+    "@types/history": "^2.0.48",
+    "@types/meteor": "^1.4.1",
+    "@types/react-dom": "^15.5.0",
+    "@types/react-router": "^4.0.9",
+    "@types/react-router-dom": "^4.0.4",
     "babel-runtime": "^6.20.0",
     "meteor-node-stubs": "~0.2.4",
     "react": "^15.5.4",
     "react-addons-pure-render-mixin": "^15.5.2",
     "react-dom": "^15.5.4",
-    "react-form": "^1.2.7"
+    "react-form": "^1.2.7",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1"
   }
 }
