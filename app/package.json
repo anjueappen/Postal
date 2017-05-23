@@ -25,6 +25,7 @@
     "react-router-dom": "^4.1.1",
     "semantic-ui-react": "^0.68.3",
     "simpl-schema": "^0.3.0",
+    "simple-ts-schema": "^1.0.0",
     "ts-loader": "^2.0.3",
     "typed-react": "^3.4.1",
     "typescript": "^2.4.0-dev.20170519",

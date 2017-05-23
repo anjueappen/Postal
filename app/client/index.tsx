@@ -4,7 +4,38 @@ import {Component, Props} from 'react';
 import * as ReactDOM from 'react-dom';
 import { Hello } from '../components/Hello';
 
-interface UserProps extends Props<{}> {userID: string; query:string}
+
+interface UserProps {userID: String; query:String};
+class User extends React.Component<UserProps, {}>{
+  render(){
+    return (
+      <div>
+      <h1> I am user {this.props.userID} with query {this.props.query}</h1>
+      </div>
+    )
+  }
+}
+type RouterProps = { user:User, path:string };
+function router(props: RouterProps){
+  //TODO insert path parsing functions here
+  switch (props.path) {
+    case "/":
+      return <Hello compiler="TypeScript" framework="React" />;
+
+      //TODO add more paths
+    default:
+    //TODO change to a NotFound component 
+      return <Hello compiler="TypeScript" framework="React" />;
+  }
+}
+
+Meteor.startup(() => ReactDOM.render(
+    <Hello compiler="TypeScript" framework="React" />,
+    document.getElementById("root")
+));
+// import {Router, Route, browserHistory} from 'react-router';
+
+// interface UserProps extends Props<{}> {userID: string; query:string}
 
 // class User extends Component<UserProps,{}> {
 //   render() {
@@ -74,8 +105,3 @@ interface UserProps extends Props<{}> {userID: string; query:string}
 //             return <NotFound path={props.path}/>;
 //     }
 // }
-
-Meteor.startup(() => ReactDOM.render(
-    <Hello compiler="TypeScript" framework="React" />,
-    document.getElementById("root")
-));

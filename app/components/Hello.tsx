@@ -1,5 +1,5 @@
 import * as React from "react";
- import {AnjuForm} from "../components/Form";
+ // import {AnjuForm} from "../components/Form";
 import { Form, Text, Select, Textarea, Checkbox, Radio, RadioGroup, NestedForm, FormError } from 'react-form'
 
 
@@ -81,7 +81,6 @@ export class Hello extends React.Component<HelloProps, HelloState> {
               )
             }}
           </Form>
-
          </div>;
     }
 }
