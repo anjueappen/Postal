@@ -2,7 +2,6 @@
 import * as React from 'react';
 import {Component, Props} from 'react';
 import * as ReactDOM from 'react-dom';
-import { Router, Route, browserHistory} from 'react-router';
 import { Hello } from '../components/Hello';
 
 interface UserProps extends Props<{}> {userID: string; query:string}
@@ -46,6 +45,35 @@ interface UserProps extends Props<{}> {userID: string; query:string}
 //   </Router>
 // ), document.getElementById('root'))});
 
+// type Props = { user:User, path:string };
+//
+// export default function Main(props: Props) {
+//     return (
+//         <div>
+//             <h1>Header</h1>
+//             {router(props)}
+//             <h1>Footer</h1>
+//         </div>
+//     );
+// }
+//
+// function router(props: Props) {
+//     var {key, param} = parsePath(props.path);
+//     switch (key) {
+//         case '':
+//             return <JobMain/>;
+//         case 'jobMain':
+//             return <JobMain/>;
+//         case 'empMain':
+//             return <Employee type="perm" empId={param}/>;
+//         case 'tempMain':
+//             return <Employee type="temp" empId={param}/>;
+//         case 'admin':
+//             return <Admin user={props.user}/>;
+//         default:
+//             return <NotFound path={props.path}/>;
+//     }
+// }
 
 Meteor.startup(() => ReactDOM.render(
     <Hello compiler="TypeScript" framework="React" />,
