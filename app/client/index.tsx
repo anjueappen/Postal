@@ -3,9 +3,11 @@ import * as React from 'react';
 import {Component, Props} from 'react';
 import * as ReactDOM from 'react-dom';
 import { Hello } from '../components/Hello';
+// import * as Meteor from 'meteor';
 
 
-interface UserProps {userID: String; query:String};
+interface UserProps {userID: string; query:string};
+
 class User extends React.Component<UserProps, {}>{
   render(){
     return (
@@ -15,7 +17,11 @@ class User extends React.Component<UserProps, {}>{
     )
   }
 }
-type RouterProps = { user:User, path:string };
+
+
+// TODO --> interface RouterProps { user:User, path:string };
+interface RouterProps { user:string, path:string };
+
 function router(props: RouterProps){
   //TODO insert path parsing functions here
   switch (props.path) {
@@ -24,15 +30,40 @@ function router(props: RouterProps){
 
       //TODO add more paths
     default:
-    //TODO change to a NotFound component 
+    //TODO change to a NotFound component
       return <Hello compiler="TypeScript" framework="React" />;
   }
 }
 
-Meteor.startup(() => ReactDOM.render(
-    <Hello compiler="TypeScript" framework="React" />,
-    document.getElementById("root")
-));
+
+export default function Main(props: RouterProps) {
+    return (
+        <div>
+            <h1>Header</h1>
+            {router(props)}
+            <h1>Footer</h1>
+        </div>
+    );
+}
+
+
+
+
+function renderApp(path: string) {
+  //TODO Fix user
+    let user = "A user"
+    ReactDOM.render(
+        <Main user={user} path={path}/>,
+        document.getElementById('root')
+    );
+}
+Meteor.startup(() => {
+  renderApp(window.location.pathname); //render page the first time
+  window.addEventListener('popstate', function (e) {
+      //render page when path changes
+      renderApp(window.location.pathname);
+  });
+});
 // import {Router, Route, browserHistory} from 'react-router';
 
 // interface UserProps extends Props<{}> {userID: string; query:string}

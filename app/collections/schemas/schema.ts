@@ -1,6 +1,7 @@
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 import {AddressSchema} from './utils';
 
+//TODO git stash pop to get import to simple-ts-schema 
 export const Schema = {
   UserProfile: new SimpleSchema({
       name: {
