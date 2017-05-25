@@ -18,6 +18,12 @@ class User extends React.Component<UserProps, {}>{
   }
 }
 
+class NotFound extends React.Component<{}, {}>{
+  render(){
+    return <div>Page Not Found</div>
+  }
+}
+
 
 // TODO --> interface RouterProps { user:User, path:string };
 interface RouterProps { user:string, path:string };
@@ -31,7 +37,7 @@ function router(props: RouterProps){
       //TODO add more paths
     default:
     //TODO change to a NotFound component
-      return <Hello compiler="TypeScript" framework="React" />;
+      return <NotFound />;
   }
 }
 
@@ -45,9 +51,6 @@ export default function Main(props: RouterProps) {
         </div>
     );
 }
-
-
-
 
 function renderApp(path: string) {
   //TODO Fix user
