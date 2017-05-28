@@ -1,86 +1,55 @@
 import * as React from "react";
- // import {AnjuForm} from "../components/Form";
+import {RegisterForm, LoginForm} from "./forms/Form";
 import { Form, Text, Select, Textarea, Checkbox, Radio, RadioGroup, NestedForm, FormError } from 'react-form'
 
 
- export interface HelloProps {compiler: string; framework: string;}
-export interface HelloState {};
+export interface HelloProps {compiler: string; framework: string;}
+export interface HelloState {formState: string};
 
 export class Hello extends React.Component<HelloProps, HelloState> {
-    render() {
-         return <div> <h1>Hello from {this.props.compiler} and {this.props.framework}! </h1>
-         <Form
-            onSubmit={(values) => {
-              console.log('Success!', values)
-            }}
 
 
-             // Validating your form is super easy, just use the `validate` life-cycle method
-            validate={values => {
-              const { name, email, phone, password } = values
-              return {
-                name: !name ? 'A name is required' : undefined,
-                email: (email && email.length < 5) ? 'Your email must be at least 5 characters long' : false,
-                phone: !phone ? 'A phone is required' : null,
-                password: !password ? 'A valid password is required' : 0
-              }
-            }}
+  constructor(props: any){
+    super(props);
+    console.log('Creating component')
 
-             // `onValidationFail` is another handy form life-cycle method
-            onValidationFail={() => {
-              {/*window.alert('There is something wrong with your form!  Please check for any required values and try again :)')*/}
-            }}
-          >
-            {({ values, submitForm, addValue, removeValue, getError }) => {
-               // A Form's direct child will usually be a function that returns a component
-               // This way you have access to form methods and form values to use in your component. See the docs for a complete list.
-              return (
-                 // When the form is submitted, call the `submitForm` callback prop
-                <form onSubmit={submitForm}>
+    this.state = {formState: 'REGISTER'}
+    this.toggleFormState = this.toggleFormState.bind(this);
+  }
 
-                  <div>
-                    <h6>Name</h6>
-                    <Text
-                      field='name'
-                      placeholder='Your name'  />
-                  </div>
+  toggleFormState():void{
+    console.log(this.state)
+    var currentState = this.state.formState;
+    var newState = currentState === 'REGISTER'? 'LOGIN': 'REGISTER';
+    this.setState({
+      formState: newState
+    });
+  }
 
-                   <div>
-                    <h6>Phone</h6>
-                    <Text
-                      field='phone'
-                      placeholder='555-1234'/>
-                  </div>
+  render() {
 
-                  <div>
-                    <h6>Email</h6>
-                    <Text
-                      field='email'
-                      placeholder='Your email' />
-                    </div>
+    if(Meteor.userId() == null){
 
-                  <div>
-                    <span>
+      //TODO Change toggle button to switcher
+      if(this.state.formState == 'REGISTER'){
+        return <div>
+            <button type="button" onClick={this.toggleFormState}> Toggle</button>
+            <h1>Register</h1>
+            {RegisterForm}
+            </div>;
+      }else if (this.state.formState == 'LOGIN'){
+        return <div>
+            <button type="button" onClick={this.toggleFormState}> Toggle</button>
+            <h1>Login</h1>
+            {LoginForm}
+        </div>
+      }
 
 
-                    </span>
-                    <h6>Password</h6>
-                    <Text
-                      field='password'
-                      placeholder='Password'   />
-                    </div>
+    }else{
 
-                  <br/>
-
-                  {/*  Since this is the parent form, let's put a submit button in there ;) */}
-                  {/*  You can submit your form however you want, as long as you call the `submitForm` callback */}
-                  <button>
-                    Submit
-                  </button>
-                </form>
-              )
-            }}
-          </Form>
-         </div>;
+      //TODO Move userID logic out to parent compoent
     }
+
+  }
 }
