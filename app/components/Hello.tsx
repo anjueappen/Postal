@@ -8,9 +8,9 @@ export interface HelloState {formState: string};
 
 export class Hello extends React.Component<HelloProps, HelloState> {
 
-  shouldComponentUpdate():boolean {
-    return false;
-  }
+  // shouldComponentUpdate():boolean {
+  //   return false;
+  // }
 
   constructor(props: any){
     super(props);

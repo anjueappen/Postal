@@ -7,11 +7,14 @@ export const RegisterForm = (
      onSubmit={(values) => {
        const {name, email, phone, password} = values;
        Accounts.createUser(
-         {username: name, email:email,
-         phone:phone, password:password},
+
+         {username: name,
+          email: email,
+          phone: phone,
+          password: password},
 
          function(err){
-           (err) ? console.log(err) :  console.log('Success ', Meteor.userId());
+           (err) ? console.log(err) :  console.log('Success', Meteor.userId());
          } );
      }}
 
@@ -88,7 +91,13 @@ export const RegisterForm = (
 export const LoginForm = (
   <Form
      onSubmit={(values) => {
-       console.log('Success!', values)
+       const {email, password} = values;
+       //TODO User should login with either email or password
+       Meteor.loginWithPassword(email, password,
+         function(err){
+           (err) ? console.log(err) :  console.log('Success', Meteor.userId());
+       })
+       console.log('Login Success!', values)
      }}
 
 
