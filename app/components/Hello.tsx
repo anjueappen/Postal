@@ -8,6 +8,9 @@ export interface HelloState {formState: string};
 
 export class Hello extends React.Component<HelloProps, HelloState> {
 
+  shouldComponentUpdate():boolean {
+    return false;
+  }
 
   constructor(props: any){
     super(props);
@@ -26,10 +29,9 @@ export class Hello extends React.Component<HelloProps, HelloState> {
     });
   }
 
+
+//TODO Make the login form a stateless component with container
   render() {
-
-    if(Meteor.userId() == null){
-
       //TODO Change toggle button to switcher
       if(this.state.formState == 'REGISTER'){
         return <div>
@@ -44,12 +46,6 @@ export class Hello extends React.Component<HelloProps, HelloState> {
             {LoginForm}
         </div>
       }
-
-
-    }else{
-
-      //TODO Move userID logic out to parent compoent
-    }
 
   }
 }

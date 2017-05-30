@@ -24,3 +24,4 @@ react-meteor-data
 aldeed:simple-schema
 accounts-ui
 accounts-password
+accounts-base

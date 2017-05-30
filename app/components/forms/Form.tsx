@@ -1,10 +1,18 @@
-import * as React from 'react'
-import { Form, Text } from 'react-form'
+import * as React from 'react';
+import { Form, Text } from 'react-form';
+import { Accounts } from 'meteor/accounts-base';
 
 export const RegisterForm = (
   <Form
      onSubmit={(values) => {
-       console.log('Success!', values)
+       const {name, email, phone, password} = values;
+       Accounts.createUser(
+         {username: name, email:email,
+         phone:phone, password:password},
+
+         function(err){
+           (err) ? console.log(err) :  console.log('Success ', Meteor.userId());
+         } );
      }}
 
 

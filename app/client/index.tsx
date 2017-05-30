@@ -31,15 +31,23 @@ interface RouterProps { user:string, path:string };
 
 function router(props: RouterProps){
   //TODO insert path parsing functions here
-  switch (props.path) {
-    case "/":
-      return <Hello compiler="TypeScript" framework="React" />;
 
-      //TODO add more paths
-    default:
-    //TODO change to a NotFound component
-      return <NotFound />;
+  if(Meteor.userId() == null){ 
+
+    return <Hello compiler="TypeScript" framework="React" />;
+
+  } else {
+    switch (props.path) {
+      case "/":
+        return <Hello compiler="TypeScript" framework="React" />;
+
+        //TODO add more paths
+      default:
+      //TODO change to a NotFound component
+        return <NotFound />;
+    }
   }
+
 }
 
 
