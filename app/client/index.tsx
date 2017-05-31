@@ -3,6 +3,7 @@ import * as React from 'react';
 import {Component, Props} from 'react';
 import * as ReactDOM from 'react-dom';
 import { Hello } from '../components/Hello';
+import { WelcomePage } from '../components/WelcomePage';
 // import { Meteor } from 'meteor/meteor';
 // import * as Meteor from 'meteor';
 
@@ -25,21 +26,42 @@ class NotFound extends React.Component<{}, {}>{
   }
 }
 
+class LoggedIn extends React.Component<{}, {}>{
 
-// TODO --> interface RouterProps { user:User, path:string };
+  constructor(props:any){
+    super(props);
+    this.logOut = this.logOut.bind(this);
+  }
+  logOut():void{
+    Meteor.logout(function(err){
+      (err) ? console.log(err) :  console.log('Success logging out');
+    })
+  }
+  render(){
+    return <div>
+
+    You are logged in!
+    <br/>
+    <button type="button" onClick={this.logOut}> Log Out </button>
+
+     </div>
+  }
+}
+
+
 interface RouterProps { user:string, path:string };
 
 function router(props: RouterProps){
   //TODO insert path parsing functions here
 
-  if(Meteor.userId() == null){ 
-
-    return <Hello compiler="TypeScript" framework="React" />;
+  if(Meteor.userId() == null){
+    //TODO move login logic to outside router
+    return <WelcomePage compiler="TypeScript" framework="React" />;
 
   } else {
     switch (props.path) {
       case "/":
-        return <Hello compiler="TypeScript" framework="React" />;
+        return <LoggedIn />;
 
         //TODO add more paths
       default:
