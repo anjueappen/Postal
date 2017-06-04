@@ -32,6 +32,7 @@ class LoggedIn extends React.Component<{}, {}>{
     super(props);
     this.logOut = this.logOut.bind(this);
   }
+  
   logOut():void{
     Meteor.logout(function(err){
       (err) ? console.log(err) :  console.log('Success logging out');

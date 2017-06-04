@@ -68,7 +68,7 @@ export class RegisterForm extends React.Component<FormProps, FormState>{
                {/*  Since this is the parent form, let's put a submit button in there ;) */}
                {/*  You can submit your form however you want, as long as you call the `submitForm` callback */}
                <button>
-                 Login
+                 Register
                </button>
              </form>
            )
