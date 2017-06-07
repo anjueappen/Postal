@@ -32,7 +32,7 @@ class LoggedIn extends React.Component<{}, {}>{
     super(props);
     this.logOut = this.logOut.bind(this);
   }
-  
+
   logOut():void{
     Meteor.logout(function(err){
       (err) ? console.log(err) :  console.log('Success logging out');
@@ -49,6 +49,24 @@ class LoggedIn extends React.Component<{}, {}>{
   }
 }
 
+class PostItems extends React.Component<{}, {}>{
+  constructor(props:any){
+    super(props);
+  }
+
+  addPost(){
+
+  }
+
+  render(){
+    return <div>
+    <button type="button" onClick={this.logOut}> Log Out </button>
+
+    </div>
+  }
+
+}
+
 
 interface RouterProps { user:string, path:string };
 
@@ -57,14 +75,15 @@ function router(props: RouterProps){
 
   if(Meteor.userId() == null){
     //TODO move login logic to outside router
-    return <WelcomePage compiler="TypeScript" framework="React" />;
+    return <WelcomePage  />;
 
   } else {
     switch (props.path) {
       case "/":
         return <LoggedIn />;
 
-        //TODO add more paths
+      case "":
+        return
       default:
       //TODO change to a NotFound component
         return <NotFound />;
