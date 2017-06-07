@@ -38,7 +38,7 @@ class LoggedIn extends React.Component<{}, {}>{
     Meteor.logout(function(err){
       (err) ? console.log(err) :  console.log('Success logging out');
     })
-    router({user: oldID, path: "/"});
+    window.location.assign("/")
   }
   render(){
     return <div>
@@ -76,6 +76,9 @@ interface RouterProps { user:string, path:string };
 function router(props: RouterProps){
   //TODO insert path parsing functions here
 
+  console.log("Going to ", props.path);
+  console.log(Meteor.userId());
+
   if(Meteor.userId() == null){
     //TODO move login logic to outside router
     return <WelcomePage  />;
@@ -84,9 +87,6 @@ function router(props: RouterProps){
     switch (props.path) {
       case "/":
         return <LoggedIn />;
-
-      case "":
-        return
       default:
       //TODO change to a NotFound component
         return <NotFound />;
@@ -114,6 +114,7 @@ function renderApp(path: string) {
         document.getElementById('root')
     );
 }
+
 Meteor.startup(() => {
   renderApp(window.location.pathname); //render page the first time
   window.addEventListener('popstate', function (e) {

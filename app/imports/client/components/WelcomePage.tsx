@@ -40,6 +40,9 @@ export class WelcomePage extends React.Component<WelcomeProps, WelcomeState>{
         function(err){
           (err) ? console.log(err) :  console.log('Success', Meteor.userId());
         } );
+        // window.location.replace("/");
+        window.location.assign("/");
+        
   }
 
   //TODO User should login with either email or password
@@ -48,7 +51,8 @@ export class WelcomePage extends React.Component<WelcomeProps, WelcomeState>{
     Meteor.loginWithPassword(email, password,
       function(err){
         (err) ? console.log(err) :  console.log('Success', Meteor.userId());
-    })
+    });
+    window.location.assign("/");
   }
 
   render(){

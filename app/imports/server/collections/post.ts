@@ -1,5 +1,5 @@
 import {Mongo} from 'meteor/mongo';
-import {IAddress, ILatLon} from "./utils/utilInterfaces.ts";
+import {IAddress, ILatLon} from "./utils/utilInterfaces";
 import createCollection from "./utils/createCollection";
 
 export interface Post{
