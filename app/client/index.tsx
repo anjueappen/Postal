@@ -2,8 +2,8 @@
 import * as React from 'react';
 import {Component, Props} from 'react';
 import * as ReactDOM from 'react-dom';
-import { Hello } from '../components/Hello';
-import { WelcomePage } from '../components/WelcomePage';
+// import { Hello } from '../components/Hello';
+import { WelcomePage } from '../imports/client/components/WelcomePage';
 // import { Meteor } from 'meteor/meteor';
 // import * as Meteor from 'meteor';
 
@@ -34,9 +34,11 @@ class LoggedIn extends React.Component<{}, {}>{
   }
 
   logOut():void{
+    let oldID = Meteor.userId();
     Meteor.logout(function(err){
       (err) ? console.log(err) :  console.log('Success logging out');
     })
+    router({user: oldID, path: "/"});
   }
   render(){
     return <div>
@@ -52,15 +54,16 @@ class LoggedIn extends React.Component<{}, {}>{
 class PostItems extends React.Component<{}, {}>{
   constructor(props:any){
     super(props);
+    this.addPost = this.addPost.bind(this)
   }
 
   addPost(){
-
+    console.log("Adding post");
   }
 
   render(){
     return <div>
-    <button type="button" onClick={this.logOut}> Log Out </button>
+    <button type="button" onClick={this.addPost}> Log Out </button>
 
     </div>
   }
