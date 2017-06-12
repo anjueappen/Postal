@@ -70,6 +70,17 @@ class PostItems extends React.Component<{}, {}>{
 
 }
 
+function parsePath(path: string):object{
+    var parser = document.createElement('a');
+    parser.href = path;
+
+    var param_string = parser.search;
+    var key = param_string.substring(param_string.indexOf('?') + 1,
+                                     param_string.indexOf("="));
+    var value = param_string.substring(param_string.indexOf("=") + 1,
+                                       param_string.length)
+    return {key:value}
+}
 
 interface RouterProps { user:string, path:string };
 
@@ -77,9 +88,9 @@ function router(props: RouterProps){
   //TODO insert path parsing functions here
 
   console.log("Going to ", props.path);
-  console.log(Meteor.userId());
+  console.log(props.user);
 
-  if(Meteor.userId() == null){
+  if(props.user == null){
     //TODO move login logic to outside router
     return <WelcomePage  />;
 
@@ -96,6 +107,7 @@ function router(props: RouterProps){
 }
 
 
+
 export default function Main(props: RouterProps) {
     return (
         <div>
@@ -110,7 +122,7 @@ function renderApp(path: string) {
   //TODO Fix user
     let user = "A user"
     ReactDOM.render(
-        <Main user={user} path={path}/>,
+        <Main user={Meteor.userId()} path={path}/>,
         document.getElementById('root')
     );
 }
@@ -188,6 +200,7 @@ Meteor.startup(() => {
 //             return <Employee type="perm" empId={param}/>;
 //         case 'tempMain':
 //             return <Employee type="temp" empId={param}/>;
+                // no need for empId..
 //         case 'admin':
 //             return <Admin user={props.user}/>;
 //         default:
