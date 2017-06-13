@@ -2,6 +2,8 @@ import * as React from 'react';
 import { Form, Text } from 'react-form';
 import { Accounts } from 'meteor/accounts-base';
 
+const EMAILREGEX = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+
 export interface HandlerMethod {(values: any): void };
 
 interface FormProps {submitHandler:HandlerMethod};
@@ -78,7 +80,7 @@ export class RegisterForm extends React.Component<FormProps, FormState>{
   }
 }
 
-export class LoginForm extends React.Component<FormProps, FormState>{
+export class LoginForm2 extends React.Component<FormProps, FormState>{
 
   render(){
     return <div>
@@ -128,9 +130,7 @@ export class LoginForm extends React.Component<FormProps, FormState>{
 
                {/*  Since this is the parent form, let's put a submit button in there ;) */}
                {/*  You can submit your form however you want, as long as you call the `submitForm` callback */}
-               <button>
-                 Login
-               </button>
+               <button type="button" onClick={this.props.submitHandler}> Log Out </button>
              </form>
            )
          }}
@@ -138,3 +138,25 @@ export class LoginForm extends React.Component<FormProps, FormState>{
     </div>
   }
 }
+
+
+export class LoginForm extends React.Component<FormProps, FormState> {
+
+  // componentDidMount(){
+  //   document.getElementById("loginForm").addEventListener("submit", this.props.submitHandler);
+  // }
+
+  render(){
+    return <div>
+      <h1>Login</h1>
+        <form name="loginForm">
+        <h5>Email:</h5>
+        <input type="text" name="email" required/><br/>
+        <h5>Password:</h5>
+        <input type="password" name="password" required /><br/>
+        <input type="submit" value="Submit" onClick={this.props.submitHandler}/>
+
+      </form>
+    </div>
+  }
+};
