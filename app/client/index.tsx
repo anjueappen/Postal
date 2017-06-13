@@ -90,9 +90,11 @@ function router(props: RouterProps){
   console.log("Going to ", props.path);
   console.log(props.user);
 
-  if(props.user == null){
+  if(props.user == null ){
+    if( !Meteor.loggingIn()){
+      return <WelcomePage  />;
+    }
     //TODO move login logic to outside router
-    return <WelcomePage  />;
 
   } else {
     switch (props.path) {
