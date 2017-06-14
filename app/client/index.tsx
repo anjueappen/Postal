@@ -1,11 +1,8 @@
-// import * as Meteor from 'meteor';
 import * as React from 'react';
 import {Component, Props} from 'react';
 import * as ReactDOM from 'react-dom';
-// import { Hello } from '../components/Hello';
 import { WelcomePage } from '../imports/client/components/WelcomePage';
-// import { Meteor } from 'meteor/meteor';
-// import * as Meteor from 'meteor';
+import { PostItem } from '../imports/client/components/PostItem';
 
 
 interface UserProps {userID: string; query:string};
@@ -47,7 +44,20 @@ class LoggedIn extends React.Component<{}, {}>{
     <br/>
     <button type="button" onClick={this.logOut}> Log Out </button>
 
+    <br/>
+    <PostItemsList/>
      </div>
+  }
+}
+
+class PostItemsList extends React.Component<{}, {}>{
+  render(){
+    console.log(Meteor.subscribe('myPosts'));
+    return <div>Post List to go here</div>
+
+  // var postItems = Meteor.subscribe('myPosts').map(function(post){
+  //               return <li><PostItem name=post.name deliveryStatus=post.deliveryStatus/></li>;
+  //             })
   }
 }
 
