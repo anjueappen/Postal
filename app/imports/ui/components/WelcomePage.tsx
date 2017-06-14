@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Accounts } from 'meteor/accounts-base';
-import {RegisterForm, LoginForm, HandlerMethod} from "./forms/Form";
+import {RegisterForm, LoginForm, HandlerMethod} from "../forms/Form";
 
 interface WelcomeProps {};
 interface WelcomeState {formState: string};

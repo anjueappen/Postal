@@ -1,82 +1,82 @@
 import * as React from 'react';
 import {Component, Props} from 'react';
 import * as ReactDOM from 'react-dom';
-import { WelcomePage } from '../imports/client/components/WelcomePage';
-import { PostItem } from '../imports/client/components/PostItem';
+import { WelcomePage } from '../imports/ui/components/WelcomePage';
+import { PostItem } from '../imports/ui/components/PostItem';
 
 
 interface UserProps {userID: string; query:string};
 
 class User extends React.Component<UserProps, {}>{
-  render(){
-    return (
-      <div>
-      <h1> I am user {this.props.userID} with query {this.props.query}</h1>
-      </div>
-    )
-  }
+    render(){
+        return (
+            <div>
+                <h1> I am user {this.props.userID} with query {this.props.query}</h1>
+            </div>
+        )
+    }
 }
 
 class NotFound extends React.Component<{}, {}>{
-  render(){
-    return <div>Page Not Found</div>
-  }
+    render(){
+        return <div>Page Not Found</div>
+    }
 }
 
 class LoggedIn extends React.Component<{}, {}>{
 
-  constructor(props:any){
-    super(props);
-    this.logOut = this.logOut.bind(this);
-  }
+    constructor(props:any){
+        super(props);
+        this.logOut = this.logOut.bind(this);
+    }
 
-  logOut():void{
-    let oldID = Meteor.userId();
-    Meteor.logout(function(err){
-      (err) ? console.log(err) :  console.log('Success logging out');
-    })
-    window.location.assign("/")
-  }
-  render(){
-    return <div>
+    logOut():void{
+        let oldID = Meteor.userId();
+        Meteor.logout(function(err){
+            (err) ? console.log(err) :  console.log('Success logging out');
+        })
+        window.location.assign("/")
+    }
+    render(){
+        return <div>
 
-    You are logged in!
-    <br/>
-    <button type="button" onClick={this.logOut}> Log Out </button>
+            You are logged in!
+            <br/>
+            <button type="button" onClick={this.logOut}> Log Out </button>
 
-    <br/>
-    <PostItemsList/>
-     </div>
-  }
+            <br/>
+            <PostItemsList/>
+        </div>
+    }
 }
 
 class PostItemsList extends React.Component<{}, {}>{
-  render(){
-    console.log(Meteor.subscribe('myPosts'));
-    return <div>Post List to go here</div>
+    render(){
+        console.log(Meteor.subscribe('myPosts'));
+        return <div>Post List to go here</div>
 
-  // var postItems = Meteor.subscribe('myPosts').map(function(post){
-  //               return <li><PostItem name=post.name deliveryStatus=post.deliveryStatus/></li>;
-  //             })
-  }
+        // var postItems = Meteor.subscribe('myPosts').map(function(post){
+        //               return <li><PostItem name=post.name deliveryStatus=post.deliveryStatus/></li>;
+        //             })
+    }
 }
 
 class PostItems extends React.Component<{}, {}>{
-  constructor(props:any){
-    super(props);
-    this.addPost = this.addPost.bind(this)
-  }
+    constructor(props:any){
+        super(props);
+        this.addPost = this.addPost.bind(this)
+    }
 
-  addPost(){
-    console.log("Adding post");
-  }
+    addPost(){
+        console.log("Adding post");
+    }
 
-  render(){
-    return <div>
-    <button type="button" onClick={this.addPost}> Log Out </button>
+    render(){
+        return <div>
+            <button type="button" onClick={this.addPost}> Log Out </button>
 
-    </div>
-  }
+        </div>
+    }
 
 }
 
@@ -86,39 +86,37 @@ function parsePath(path: string):object{
 
     var param_string = parser.search;
     var key = param_string.substring(param_string.indexOf('?') + 1,
-                                     param_string.indexOf("="));
+        param_string.indexOf("="));
     var value = param_string.substring(param_string.indexOf("=") + 1,
-                                       param_string.length)
+        param_string.length)
     return {key:value}
 }
 
 interface RouterProps { user:string, path:string };
 
 function router(props: RouterProps){
-  //TODO insert path parsing functions here
+    //TODO insert path parsing functions here
 
-  console.log("Going to ", props.path);
-  console.log(props.user);
+    console.log("Going to ", props.path);
+    console.log(props.user);
 
-  if(props.user == null ){
-    if( !Meteor.loggingIn()){
-      return <WelcomePage  />;
+    if(props.user == null ){
+        if( !Meteor.loggingIn()){
+            return <WelcomePage  />;
+        }
+        //TODO move login logic to outside router
+
+    } else {
+        switch (props.path) {
+            case "/":
+                return <LoggedIn />;
+            default:
+                //TODO change to a NotFound component
+                return <NotFound />;
+        }
     }
-    //TODO move login logic to outside router
-
-  } else {
-    switch (props.path) {
-      case "/":
-        return <LoggedIn />;
-      default:
-      //TODO change to a NotFound component
-        return <NotFound />;
-    }
-  }
 
 }
-
-
 
 export default function Main(props: RouterProps) {
     return (
@@ -131,7 +129,7 @@ export default function Main(props: RouterProps) {
 }
 
 function renderApp(path: string) {
-  //TODO Fix user
+    //TODO Fix user
     let user = "A user"
     ReactDOM.render(
         <Main user={Meteor.userId()} path={path}/>,
@@ -140,11 +138,11 @@ function renderApp(path: string) {
 }
 
 Meteor.startup(() => {
-  renderApp(window.location.pathname); //render page the first time
-  window.addEventListener('popstate', function (e) {
-      //render page when path changes
-      renderApp(window.location.pathname);
-  });
+    renderApp(window.location.pathname); //render page the first time
+    window.addEventListener('popstate', function (e) {
+        //render page when path changes
+        renderApp(window.location.pathname);
+    });
 });
 // import {Router, Route, browserHistory} from 'react-router';
 
@@ -212,7 +210,7 @@ Meteor.startup(() => {
 //             return <Employee type="perm" empId={param}/>;
 //         case 'tempMain':
 //             return <Employee type="temp" empId={param}/>;
-                // no need for empId..
+// no need for empId..
 //         case 'admin':
 //             return <Admin user={props.user}/>;
 //         default:

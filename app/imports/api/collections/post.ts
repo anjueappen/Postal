@@ -1,6 +1,6 @@
 import {Mongo} from 'meteor/mongo';
-import {IAddress, ILatLon} from "./utils/utilInterfaces";
-import createCollection from "./utils/createCollection";
+import {IAddress, ILatLon} from "../utils/utilInterfaces";
+import createCollection from "../utils/createCollection";
 
 export enum DeliveryStatus {Delivered, InTransit, Pending};
 

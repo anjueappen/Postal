@@ -1,6 +1,6 @@
-import {Posts, Post} from './collections/post';
+import {Posts, Post} from '../../api/collections/post';
 import * as _ from 'underscore';
-import {DeliveryStatus} from './collections/post';
+import {DeliveryStatus} from '../../api/collections/post';
 
 if (Posts.find().count() === 0) {
   var categories = [
