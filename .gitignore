@@ -3,3 +3,6 @@ app/node_modules/
 *.js
 .idea/
 test/
+.DS_Store
+app/.DS_Store
+
