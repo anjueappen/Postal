@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Component, Props} from 'react';
+import {Posts} from '../imports/api/posts/post';
 import * as ReactDOM from 'react-dom';
 import { WelcomePage } from '../imports/ui/components/WelcomePage';
 import { PostItem } from '../imports/ui/components/PostItem';
@@ -34,7 +34,7 @@ class LoggedIn extends React.Component<{}, {}>{
         let oldID = Meteor.userId();
         Meteor.logout(function(err){
             (err) ? console.log(err) :  console.log('Success logging out');
-        })
+        });
         window.location.assign("/")
     }
     render(){
@@ -45,19 +45,8 @@ class LoggedIn extends React.Component<{}, {}>{
             <button type="button" onClick={this.logOut}> Log Out </button>
 
             <br/>
-            <PostItemsList/>
+            <PostItems/>
         </div>
-    }
-}
-
-class PostItemsList extends React.Component<{}, {}>{
-    render(){
-        console.log(Meteor.subscribe('myPosts'));
-        return <div>Post List to go here</div>
-
-        // var postItems = Meteor.subscribe('myPosts').map(function(post){
-        //               return <li><PostItem name=post.name deliveryStatus=post.deliveryStatus/></li>;
-        //             })
     }
 }
 
@@ -72,9 +61,13 @@ class PostItems extends React.Component<{}, {}>{
     }
 
     render(){
+        console.log(Meteor.subscribe('myPosts'));
+        var posts = Posts.find({senderIdentifier: Meteor.userId()});
+        // var p = posts.map((post) => {return <li><PostItem name={post.name} deliveryStatus={post.deliveryStatus} /></li>});
+        var p = posts.map((post) => {return <li>{post}</li>});
         return <div>
             <button type="button" onClick={this.addPost}> Log Out </button>
-
+            <ul>{p}</ul>
         </div>
     }
 

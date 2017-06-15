@@ -1,6 +1,6 @@
-import {Posts, Post} from '../../api/collections/post';
+import {Posts, Post} from '../../api/posts/post';
 import * as _ from 'underscore';
-import {DeliveryStatus} from '../../api/collections/post';
+import {DeliveryStatus} from '../../api/posts/post';
 
 if (Posts.find().count() === 0) {
   var categories = [
@@ -20,6 +20,6 @@ if (Posts.find().count() === 0) {
     }
 ];
 
-_.each(categories, function (category) {var id = Posts.insert(category);});
+_.each(categories, function (category) { Posts.insert(category);});
 console.log("Done loading fixtures");
 }
