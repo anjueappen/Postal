@@ -1,5 +1,9 @@
-import {Post, Posts} from "../collections/post";
+import {Post, Posts} from "../post";
 
+//Get all posts
+Meteor.publish('posts.all', function(): Mongo.Cursor<Post> {
+    return Posts.find();
+})
 
 //Get get my posts
 Meteor.publish('myPosts', function(): Mongo.Cursor<Post>{

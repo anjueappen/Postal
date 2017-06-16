@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {Posts} from '../imports/api/posts/post';
+import {Posts, DeliveryStatus} from '../imports/api/posts/post';
 import * as ReactDOM from 'react-dom';
 import { WelcomePage } from '../imports/ui/components/WelcomePage';
 import { PostItem } from '../imports/ui/components/PostItem';
+import { createContainer } from 'meteor/react-meteor-data';
 
 
 interface UserProps {userID: string; query:string};
@@ -54,6 +55,7 @@ class PostItems extends React.Component<{}, {}>{
     constructor(props:any){
         super(props);
         this.addPost = this.addPost.bind(this)
+
     }
 
     addPost(){
@@ -61,17 +63,30 @@ class PostItems extends React.Component<{}, {}>{
     }
 
     render(){
-        console.log(Meteor.subscribe('myPosts'));
-        var posts = Posts.find({senderIdentifier: Meteor.userId()});
+      Meteor.subscribe('posts.all', function() {
+        console.log(Posts.find().count());
+      });
+        // console.log(Meteor.subscribe('myPosts'));
+        // var posts = Posts.find({senderIdentifier: Meteor.userId()});
+        var posts = Posts.find().fetch();
+        console.log(posts);
         // var p = posts.map((post) => {return <li><PostItem name={post.name} deliveryStatus={post.deliveryStatus} /></li>});
-        var p = posts.map((post) => {return <li>{post}</li>});
+        // var p = posts.map((post) => {return <li>{post}</li>});
         return <div>
-            <button type="button" onClick={this.addPost}> Log Out </button>
-            <ul>{p}</ul>
+            <button type="button" onClick={this.addPost}> Add post item </button>
+            <ul></ul>
         </div>
     }
 
 }
+
+// PostItemsContainer = createContainer(() => {
+//   const postHandle = Meteor.subscribe('posts.all');
+//   return {
+//     loading: !postHandle.ready(),
+//     post: Posts.find().fetch()
+//   };
+// }, PostItems)
 
 function parsePath(path: string):object{
     var parser = document.createElement('a');

@@ -1,4 +1,4 @@
-import '../imports/startup/server/fixtures';
+import '../imports/startup/server/index';
 import { Meteor } from 'meteor/meteor';
 
 // Meteor.startup(() => {});
