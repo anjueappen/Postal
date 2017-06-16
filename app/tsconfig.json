@@ -1,5 +1,5 @@
 {
-commpileOnSave": false,
+	"compileOnSave": false,
 	"buildOnSave": false,
 	"compilerOptions": {
 		"target": "es5",

@@ -7,3 +7,4 @@ export default function createCollection<DocInterface>(name: string): Mongo.Coll
   let collection: Mongo.Collection<DocInterface> = new Mongo.Collection<DocInterface>(name);
   return lockCollection<DocInterface>(collection);
 }
+
