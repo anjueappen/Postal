@@ -2,21 +2,9 @@ import * as React from 'react';
 import {Posts, DeliveryStatus} from '../imports/api/posts/post';
 import * as ReactDOM from 'react-dom';
 import { WelcomePage } from '../imports/ui/components/WelcomePage';
-import { PostItem } from '../imports/ui/components/PostItem';
 import { createContainer } from 'meteor/react-meteor-data';
+// import {PostListContainer} from '../imports/ui/containers/PostListContainer';
 
-
-interface UserProps {userID: string; query:string};
-
-class User extends React.Component<UserProps, {}>{
-    render(){
-        return (
-            <div>
-                <h1> I am user {this.props.userID} with query {this.props.query}</h1>
-            </div>
-        )
-    }
-}
 
 class NotFound extends React.Component<{}, {}>{
     render(){
@@ -46,47 +34,10 @@ class LoggedIn extends React.Component<{}, {}>{
             <button type="button" onClick={this.logOut}> Log Out </button>
 
             <br/>
-            <PostItems/>
         </div>
     }
 }
 
-class PostItems extends React.Component<{}, {}>{
-    constructor(props:any){
-        super(props);
-        this.addPost = this.addPost.bind(this)
-
-    }
-
-    addPost(){
-        console.log("Adding post");
-    }
-
-    render(){
-      Meteor.subscribe('posts.all', function() {
-        console.log(Posts.find().count());
-      });
-        // console.log(Meteor.subscribe('myPosts'));
-        // var posts = Posts.find({senderIdentifier: Meteor.userId()});
-        var posts = Posts.find().fetch();
-        console.log(posts);
-        // var p = posts.map((post) => {return <li><PostItem name={post.name} deliveryStatus={post.deliveryStatus} /></li>});
-        // var p = posts.map((post) => {return <li>{post}</li>});
-        return <div>
-            <button type="button" onClick={this.addPost}> Add post item </button>
-            <ul></ul>
-        </div>
-    }
-
-}
-
-// PostItemsContainer = createContainer(() => {
-//   const postHandle = Meteor.subscribe('posts.all');
-//   return {
-//     loading: !postHandle.ready(),
-//     post: Posts.find().fetch()
-//   };
-// }, PostItems)
 
 function parsePath(path: string):object{
     var parser = document.createElement('a');
