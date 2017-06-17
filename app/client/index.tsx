@@ -46,12 +46,18 @@ class LoggedIn extends React.Component<{}, {}>{
             <button type="button" onClick={this.logOut}> Log Out </button>
 
             <br/>
-            <PostItems/>
+            <PostItemsContainer/>
         </div>
     }
 }
 
-class PostItems extends React.Component<{}, {}>{
+interface PostItemsProps {
+    loading:boolean,
+    postExists:boolean,
+    posts:object[],
+}
+
+class PostItemsList extends React.Component<PostItemsProps>{
     constructor(props:any){
         super(props);
         this.addPost = this.addPost.bind(this)
@@ -77,16 +83,20 @@ class PostItems extends React.Component<{}, {}>{
             <ul></ul>
         </div>
     }
-
 }
 
-// PostItemsContainer = createContainer(() => {
-//   const postHandle = Meteor.subscribe('posts.all');
-//   return {
-//     loading: !postHandle.ready(),
-//     post: Posts.find().fetch()
-//   };
-// }, PostItems)
+PostItemsContainer = createContainer(() => {
+    const postsHandle = Meteor.subscribe('posts.all');
+    const loading = !postsHandle.ready();
+    const posts = Posts.find();
+    const postExists = !loading && !!posts;
+    return {
+        loading:loading,
+        postExists: postExists,
+        posts: postExists ? posts.fetch() : [],
+    };
+}, PostItemsList);
+
 
 function parsePath(path: string):object{
     var parser = document.createElement('a');
