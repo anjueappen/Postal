@@ -57,7 +57,7 @@ interface PostItemsProps {
     posts:object[],
 }
 
-class PostItemsList extends React.Component<PostItemsProps>{
+class PostItemsListView extends React.Component<PostItemsProps>{
     constructor(props:any){
         super(props);
         this.addPost = this.addPost.bind(this)
@@ -69,18 +69,18 @@ class PostItemsList extends React.Component<PostItemsProps>{
     }
 
     render(){
-      Meteor.subscribe('posts.all', function() {
-        console.log(Posts.find().count());
-      });
-        // console.log(Meteor.subscribe('myPosts'));
+        console.log(this.props)
+        if(this.props.loading){
+            return <div>Loading...</div>
+        }
+
         // var posts = Posts.find({senderIdentifier: Meteor.userId()});
-        var posts = Posts.find().fetch();
-        console.log(posts);
         // var p = posts.map((post) => {return <li><PostItem name={post.name} deliveryStatus={post.deliveryStatus} /></li>});
-        // var p = posts.map((post) => {return <li>{post}</li>});
+
+        let p = this.props.posts.map((post) => {return <li>{post.name}</li>});
         return <div>
             <button type="button" onClick={this.addPost}> Add post item </button>
-            <ul></ul>
+            <ul>{p}</ul>
         </div>
     }
 }
@@ -95,7 +95,7 @@ PostItemsContainer = createContainer(() => {
         postExists: postExists,
         posts: postExists ? posts.fetch() : [],
     };
-}, PostItemsList);
+}, PostItemsListView);
 
 
 function parsePath(path: string):object{
