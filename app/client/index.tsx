@@ -4,6 +4,7 @@ import * as ReactDOM from 'react-dom';
 import { WelcomePage } from '../imports/ui/components/WelcomePage';
 import { PostItem } from '../imports/ui/components/PostItem';
 import { createContainer } from 'meteor/react-meteor-data';
+import {PostListContainer} from '../imports/ui/containers/PostListContainer';
 
 
 interface UserProps {userID: string; query:string};
@@ -41,61 +42,17 @@ class LoggedIn extends React.Component<{}, {}>{
     render(){
         return <div>
 
-            You are logged in!
-            <br/>
             <button type="button" onClick={this.logOut}> Log Out </button>
 
             <br/>
-            <PostItemsContainer/>
+            <PostListContainer/>
         </div>
     }
 }
 
-interface PostItemsProps {
-    loading:boolean,
-    postExists:boolean,
-    posts:object[],
-}
 
-class PostItemsListView extends React.Component<PostItemsProps>{
-    constructor(props:any){
-        super(props);
-        this.addPost = this.addPost.bind(this)
 
-    }
 
-    addPost(){
-        console.log("Adding post");
-    }
-
-    render(){
-        console.log(this.props)
-        if(this.props.loading){
-            return <div>Loading...</div>
-        }
-
-        // var posts = Posts.find({senderIdentifier: Meteor.userId()});
-        // var p = posts.map((post) => {return <li><PostItem name={post.name} deliveryStatus={post.deliveryStatus} /></li>});
-
-        let p = this.props.posts.map((post) => {return <li>{post.name}</li>});
-        return <div>
-            <button type="button" onClick={this.addPost}> Add post item </button>
-            <ul>{p}</ul>
-        </div>
-    }
-}
-
-PostItemsContainer = createContainer(() => {
-    const postsHandle = Meteor.subscribe('posts.all');
-    const loading = !postsHandle.ready();
-    const posts = Posts.find();
-    const postExists = !loading && !!posts;
-    return {
-        loading:loading,
-        postExists: postExists,
-        posts: postExists ? posts.fetch() : [],
-    };
-}, PostItemsListView);
 
 
 function parsePath(path: string):object{
