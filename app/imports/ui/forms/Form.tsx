@@ -13,7 +13,6 @@ export class RegisterForm extends React.Component<FormProps, FormState>{
       <h1>Register</h1>
       <Form
         onSubmit={this.props.submitHandler}
-          // Validating your form is super easy, just use the `validate` life-cycle method
         validate={values => {
             const { name, email, phone, password } = values
             return {
@@ -85,16 +84,14 @@ export class LoginForm extends React.Component<FormProps, FormState>{
       <h1>Login</h1>
       <Form
         onSubmit={this.props.submitHandler}
-          // Validating your form is super easy, just use the `validate` life-cycle method
         validate={values => {
            const { email, password } = values
            return {
-             email: (email && email.length < 5) ? 'Your email must be at least 5 characters long' : false,
+             email: (email && email.length < 1) ? 'Your email must be at least 1 characters long' : false,
              password: !password ? 'A valid password is required' : 0
            }
          }}
 
-          // `onValidationFail` is another handy form life-cycle method
          onValidationFail={() => {
            {/*window.alert('There is something wrong with your form!  Please check for any required values and try again :)')*/}
          }}
