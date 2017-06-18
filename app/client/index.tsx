@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {Posts, DeliveryStatus} from '../imports/api/posts/post';
 import * as ReactDOM from 'react-dom';
 import { WelcomePage } from '../imports/ui/components/WelcomePage';
 import { PostItem } from '../imports/ui/components/PostItem';

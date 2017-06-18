@@ -54,9 +54,9 @@ export class WelcomePage extends React.Component<WelcomeProps, WelcomeState>{
   render(){
 
     if(this.state.formState == 'REGISTER'){
-      var form = <RegisterForm submitHandler={this.handleRegistration}/> ;
+      let form = <RegisterForm submitHandler={this.handleRegistration}/> ;
     } else {
-      var form = <LoginForm submitHandler={this.handleLogin}/>;
+      let form = <LoginForm submitHandler={this.handleLogin}/>;
     }
 
     return <div>
