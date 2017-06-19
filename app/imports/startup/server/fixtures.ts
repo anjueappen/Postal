@@ -20,5 +20,21 @@ if (Posts.find().count() === 0) {
 ];
 
 _.each(categories, function (category) { Posts.insert(category);});
-console.log("Done loading fixtures");
+console.log("Done loading post fixtures");
 }
+
+if ( Meteor.users.find().count() === 0 ) {
+    Accounts.createUser({
+        username: 'admin',
+        email: 'admin',
+        password: '1',
+        profile: {
+            first_name: 'fname',
+            last_name: 'lname',
+            company: 'company',
+        }
+    });
+    console.log("Added default user admin")
+}
+
+
