@@ -1,4 +1,5 @@
-import {Post, Posts} from "../post";
+import {Post} from "./interfaces/post";
+import {Posts} from "./collections/posts";
 
 //Get all posts
 Meteor.publish('posts.all', function(): Mongo.Cursor<Post> {
@@ -17,8 +18,8 @@ Meteor.publish('openPosts', function(): Mongo.Cursor<Post> {
     return Posts.find({delivererIdentifier: {$exists: false}});
 });
 
-Meteor.publish('addPost', function(post): Mongo.Cursor<Post> {
-    //TODO Specify only public feilds in find() call ..change schema
-    post.senderIdentifier = this.userId();
-    return Posts.insert(post);
-});
+// Meteor.publish('addPost', function(post): Mongo.Cursor<Post> {
+//     //TODO Specify only public feilds in find() call ..change schema
+//     post.senderIdentifier = this.userId();
+//     return Posts.insert(post);
+// });

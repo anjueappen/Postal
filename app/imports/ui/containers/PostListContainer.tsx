@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import {Posts} from "../../api/posts/post";
 import { PostListView } from '../views/PostListView'
+import {Posts} from "../../api/collections/posts";
 
 export const PostListContainer = createContainer(() => {
     const postsHandle = Meteor.subscribe('posts.all');

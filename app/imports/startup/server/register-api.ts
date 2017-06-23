@@ -1,3 +1,2 @@
-
-//TODO organize these better 
-import "../../api/posts/server/publications"
+//TODO organize these better
+import "../../api/publications"

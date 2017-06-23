@@ -1,8 +1,9 @@
-import {Posts, DeliveryStatus} from '../../api/posts/post';
+import {DeliveryStatus} from '../../api/interfaces/post';
 import * as _ from 'underscore';
+import {Posts} from "../../api/collections/posts";
 
 if (Posts.find().count() === 0) {
-  var categories = [
+  let categories = [
   {
     name: 'Christmas Card',
     senderIdentifier: 'APSw6hL6eAEZ36CDY',
@@ -36,5 +37,4 @@ if ( Meteor.users.find().count() === 0 ) {
     });
     console.log("Added default user admin")
 }
-
 

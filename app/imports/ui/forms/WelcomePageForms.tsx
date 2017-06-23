@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Form, Text } from 'react-form';
-import { Accounts } from 'meteor/accounts-base';
 
 export interface HandlerMethod {(values: any): void };
 

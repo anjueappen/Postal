@@ -1,22 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { WelcomePage } from '../imports/ui/components/WelcomePage';
-import { PostItem } from '../imports/ui/components/PostItem';
 import { createContainer } from 'meteor/react-meteor-data';
 import {PostListContainer} from '../imports/ui/containers/PostListContainer';
 
-
-interface UserProps {userID: string; query:string};
-
-class User extends React.Component<UserProps, {}>{
-    render(){
-        return (
-            <div>
-                <h1> I am user {this.props.userID} with query {this.props.query}</h1>
-            </div>
-        )
-    }
-}
 
 class NotFound extends React.Component<{}, {}>{
     render(){
