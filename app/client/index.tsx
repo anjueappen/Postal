@@ -5,30 +5,31 @@ import { createContainer } from 'meteor/react-meteor-data';
 import {PostListContainer} from '../imports/ui/containers/PostListContainer';
 
 
+
 class NotFound extends React.Component<{}, {}>{
     render(){
         return <div>Page Not Found</div>
     }
 }
 
-class LoggedIn extends React.Component<{}, {}>{
+
+class Something extends React.Component<{}, {}>{
+    render(){
+        return <div>I'm amazing! I've made a Raw React Router!</div>
+    }
+}
+
+
+class LoggedIn extends React.Component<{logoutHandler:any}, {}>{
 
     constructor(props:any){
         super(props);
-        this.logOut = this.logOut.bind(this);
     }
 
-    logOut():void{
-        let oldID = Meteor.userId();
-        Meteor.logout(function(err){
-            (err) ? console.log(err) :  console.log('Success logging out');
-        });
-        window.location.assign("/")
-    }
     render(){
         return <div>
 
-            <button type="button" onClick={this.logOut}> Log Out </button>
+            <button type="button" onClick={this.props.logoutHandler}> Log Out </button>
 
             <br/>
             <PostListContainer/>
@@ -79,15 +80,15 @@ function router(props: RouterProps){
 
 }
 
-export default function Main(props: RouterProps) {
-    return (
-        <div>
-            <h1>Header</h1>
-            {router(props)}
-            <h1>Footer</h1>
-        </div>
-    );
-}
+// export default function Main(props: RouterProps) {
+//     return (
+//         <div>
+//             <h1>Header</h1>
+//             {router(props)}
+//             <h1>Footer</h1>
+//         </div>
+//     );
+// }
 
 function renderApp(path: string) {
     //TODO Fix user
@@ -98,13 +99,114 @@ function renderApp(path: string) {
     );
 }
 
+
+/*
+ Todo:
+
+ Store Meteor.userID() and location in state - when state changes, this triggers a rerender
+
+ */
+
+interface AppProps {};
+interface AppState {userId: any, location: string, transitioning:boolean, loggedIn:boolean}
+
+/*
+ Custom setState function that triggers re-render
+ */
+
+export default class Main extends React.Component<AppProps, AppState> {
+
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            userId: null,
+            location: window.location.hash,
+            transitioning: false,
+            loggedIn: Meteor.userId() != null
+        };
+
+        this.handleLogin = this.handleLogin.bind(this);
+        this.handleRegistration = this.handleRegistration.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
+
+
+        this.formCallback = this.formCallback.bind(this);
+    }
+
+    formCallback(err){
+        (err) ? console.log(err) :  console.log('Success', Meteor.userId());
+        this.setState({loggedIn: Meteor.userId() != null});
+    }
+
+    handleRegistration(values:any):void {
+        const {name, email, phone, password} = values;
+        Accounts.createUser(
+
+            {username: name,
+                email: email,
+                password: password},
+
+            this.formCallback);
+    }
+
+
+    handleLogin(values:any): void{
+        const {email, password} = values;
+        Meteor.loginWithPassword(email, password, this.formCallback);
+    }
+
+    handleLogout():void{
+        Meteor.logout(this.formCallback);
+    }
+    navigated(path: string) {
+        this.setState({location: window.location.hash});
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>Header</h1>
+                {this.route(this.state.location)}
+                <h1>Footer</h1>
+            </div>
+        );
+    }
+
+
+    route(path: string) {
+        switch (path) {
+            case '#/':
+                return this.state.loggedIn? <LoggedIn logoutHandler={this.handleLogout}/> :
+                    <WelcomePage handleRegistration={this.handleRegistration} handleLogin={this.handleLogin}/> ;
+            case '#/posts':
+                return <LoggedIn logoutHandler={this.handleLogout}/>;
+            default:
+                return <NotFound/>;
+        }
+    }
+
+}
+
+// function navigated(){
+//     setState({location: window.location.hash});
+//     ReactDOM.render(route(path), document.getElementById('root'));
+// }
+
 Meteor.startup(() => {
-    renderApp(window.location.pathname); //render page the first time
-    window.addEventListener('popstate', function (e) {
-        //render page when path changes
-        renderApp(window.location.pathname);
-    });
+// Handle the initial route
+//     navigated(window.location.hash)
+    ReactDOM.render(<Main/>, document.getElementById('root'));
+// Handle browser navigation events
+//     window.addEventListener('hashchange', navigated, false);
 });
+
+// Meteor.startup(() => {
+//     renderApp(window.location.pathname); //render page the first time
+//     window.addEventListener('popstate', function (e) {
+//         //render page when path changes
+//         renderApp(window.location.pathname);
+//     });
+// });
 // import {Router, Route, browserHistory} from 'react-router';
 
 // interface UserProps extends Props<{}> {userID: string; query:string}
