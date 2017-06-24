@@ -3,109 +3,41 @@ import * as ReactDOM from 'react-dom';
 import { WelcomePage } from '../imports/ui/components/WelcomePage';
 import { createContainer } from 'meteor/react-meteor-data';
 import {PostListContainer} from '../imports/ui/containers/PostListContainer';
+import {NotFound} from  '../imports/ui/err/NotFound';
 
 
+interface HomepageProps {logoutHandler:any}
+interface HomepageState {page:string}
 
-class NotFound extends React.Component<{}, {}>{
-    render(){
-        return <div>Page Not Found</div>
-    }
-}
-
-
-class Something extends React.Component<{}, {}>{
-    render(){
-        return <div>I'm amazing! I've made a Raw React Router!</div>
-    }
-}
-
-
-class LoggedIn extends React.Component<{logoutHandler:any}, {}>{
+class HomePage extends React.Component<HomepageProps, HomepageState>{
 
     constructor(props:any){
         super(props);
+        this.state = {
+            page: '#/posts'
+        }
     }
 
     render(){
         return <div>
-
             <button type="button" onClick={this.props.logoutHandler}> Log Out </button>
-
             <br/>
-            <PostListContainer/>
+            {this.route(this.state.page)}
         </div>
     }
-}
 
-
-
-
-
-
-function parsePath(path: string):object{
-    var parser = document.createElement('a');
-    parser.href = path;
-
-    var param_string = parser.search;
-    var key = param_string.substring(param_string.indexOf('?') + 1,
-        param_string.indexOf("="));
-    var value = param_string.substring(param_string.indexOf("=") + 1,
-        param_string.length)
-    return {key:value}
-}
-
-interface RouterProps { user:string, path:string };
-
-function router(props: RouterProps){
-    //TODO insert path parsing functions here
-
-    console.log("Going to ", props.path);
-    console.log(props.user);
-
-    if(props.user == null ){
-        if( !Meteor.loggingIn()){
-            return <WelcomePage  />;
-        }
-        //TODO move login logic to outside router
-
-    } else {
-        switch (props.path) {
-            case "/":
-                return <LoggedIn />;
+    route(path:string){
+        switch (path){
+            case '#/posts':
+                return <PostListContainer/>
             default:
-                //TODO change to a NotFound component
-                return <NotFound />;
+                console.log("defaulting");
+                return <NotFound/>
+
+
         }
     }
-
 }
-
-// export default function Main(props: RouterProps) {
-//     return (
-//         <div>
-//             <h1>Header</h1>
-//             {router(props)}
-//             <h1>Footer</h1>
-//         </div>
-//     );
-// }
-
-function renderApp(path: string) {
-    //TODO Fix user
-    let user = "A user"
-    ReactDOM.render(
-        <Main user={Meteor.userId()} path={path}/>,
-        document.getElementById('root')
-    );
-}
-
-
-/*
- Todo:
-
- Store Meteor.userID() and location in state - when state changes, this triggers a rerender
-
- */
 
 interface AppProps {};
 interface AppState {userId: any, location: string, transitioning:boolean, loggedIn:boolean}
@@ -165,7 +97,7 @@ export default class Main extends React.Component<AppProps, AppState> {
     render() {
         return (
             <div>
-                <h1>Header</h1>
+                <h1>Header goes here</h1>
                 {this.route(this.state.location)}
                 <h1>Footer</h1>
             </div>
@@ -176,10 +108,10 @@ export default class Main extends React.Component<AppProps, AppState> {
     route(path: string) {
         switch (path) {
             case '#/':
-                return this.state.loggedIn? <LoggedIn logoutHandler={this.handleLogout}/> :
+                return this.state.loggedIn? <HomePage logoutHandler={this.handleLogout}/> :
                     <WelcomePage handleRegistration={this.handleRegistration} handleLogin={this.handleLogin}/> ;
-            case '#/posts':
-                return <LoggedIn logoutHandler={this.handleLogout}/>;
+            // case '#/posts':
+            //     return <HomePage logoutHandler={this.handleLogout}/>;
             default:
                 return <NotFound/>;
         }
