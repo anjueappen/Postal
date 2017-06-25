@@ -4,6 +4,8 @@ import { WelcomePage } from '../imports/ui/components/WelcomePage';
 import { createContainer } from 'meteor/react-meteor-data';
 import {PostListContainer} from '../imports/ui/containers/PostListContainer';
 import {NotFound} from  '../imports/ui/err/NotFound';
+import MapContainer from "../imports/map/Map";
+
 
 
 interface HomepageProps {logoutHandler:any}
@@ -13,9 +15,15 @@ class HomePage extends React.Component<HomepageProps, HomepageState>{
 
     constructor(props:any){
         super(props);
-        this.state = {
-            page: '#/posts'
-        }
+
+        window.addEventListener('hashchange', this.navigated, false);
+
+        this.state = {page: '#/posts'};
+        this.navigated = this.navigated.bind(this);
+    }
+
+    navigated() {
+        setState({page: window.location.hash});
     }
 
     render(){
@@ -29,10 +37,13 @@ class HomePage extends React.Component<HomepageProps, HomepageState>{
     route(path:string){
         switch (path){
             case '#/posts':
-                return <PostListContainer/>
+                return <PostListContainer/>;
+            case '#/map':
+                return <MapContainer />
+
             default:
                 console.log("defaulting");
-                return <NotFound/>
+                return <MapContainer/>
 
 
         }
@@ -90,9 +101,6 @@ export default class Main extends React.Component<AppProps, AppState> {
     handleLogout():void{
         Meteor.logout(this.formCallback);
     }
-    navigated(path: string) {
-        this.setState({location: window.location.hash});
-    }
 
     render() {
         return (
@@ -113,7 +121,7 @@ export default class Main extends React.Component<AppProps, AppState> {
             // case '#/posts':
             //     return <HomePage logoutHandler={this.handleLogout}/>;
             default:
-                return <NotFound/>;
+                return <MapContainer/>;
         }
     }
 
@@ -129,7 +137,6 @@ Meteor.startup(() => {
 //     navigated(window.location.hash)
     ReactDOM.render(<Main/>, document.getElementById('root'));
 // Handle browser navigation events
-//     window.addEventListener('hashchange', navigated, false);
 });
 
 // Meteor.startup(() => {
