@@ -4,26 +4,20 @@ import { WelcomePage } from '../imports/ui/components/WelcomePage';
 import { createContainer } from 'meteor/react-meteor-data';
 import {PostListContainer} from '../imports/ui/containers/PostListContainer';
 import {NotFound} from  '../imports/ui/err/NotFound';
-import MapContainer from "../imports/map/Map";
 
 
 
 interface HomepageProps {logoutHandler:any}
 interface HomepageState {page:string}
 
+
 class HomePage extends React.Component<HomepageProps, HomepageState>{
 
     constructor(props:any){
         super(props);
-
-        window.addEventListener('hashchange', this.navigated, false);
-
-        this.state = {page: '#/posts'};
-        this.navigated = this.navigated.bind(this);
-    }
-
-    navigated() {
-        setState({page: window.location.hash});
+        this.state = {
+            page: '#/posts'
+        }
     }
 
     render(){
@@ -37,8 +31,8 @@ class HomePage extends React.Component<HomepageProps, HomepageState>{
     route(path:string){
         switch (path){
             case '#/posts':
-                return <PostListContainer/>;
 
+                return <PostListContainer/>
             default:
                 console.log("defaulting");
                 return <PostListContainer/>
