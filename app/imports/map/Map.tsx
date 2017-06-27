@@ -3,13 +3,31 @@ import {GoogleApiWrapper, Map} from 'google-maps-react'
 
 const __GAPI_KEY__ = "AIzaSyBTLq1MW1uKRqxDLPHiYYHVvCCr67EnS0s";
 
-const MapContainer = React.createClass({
+
+export const MapContainer = createContainer(() => {
+    const onReady = () => {
+        console.log('Map ready');
+        loaded
+    }
+};, Map);
+
+
+const class MapContainer {
+    constructor(props:any){
+        super(props);
+        this.onReady = this.onReady.bind(this);
+    },
     getInitialState: function() {
         return {
             showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: {},
         }
+    },
+
+    onReady(){
+        console.log("ready");
+        this.setState({loaded:true});
     },
 
     onMapMoved: function(props, map) {
@@ -40,6 +58,8 @@ const MapContainer = React.createClass({
         }
     },
 
+    /*OVER HERE! Check why this.props.loaded is false.. */
+
     render: function() {
         console.log(this.props);
         if (!this.props.loaded) {
@@ -54,10 +74,11 @@ const MapContainer = React.createClass({
                  containerStyle={{}}
                  centerAroundCurrentLocation={true}
                  onClick={this.onMapClicked}
-                 onDragend={this.onMapMoved} />
+                 onDragend={this.onMapMoved}
+                 onReady={this.onReady}/>
         )
     }
-});
+};
 
 
 GoogleApiWrapper({

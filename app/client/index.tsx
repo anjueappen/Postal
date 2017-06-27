@@ -38,12 +38,10 @@ class HomePage extends React.Component<HomepageProps, HomepageState>{
         switch (path){
             case '#/posts':
                 return <PostListContainer/>;
-            case '#/map':
-                return <MapContainer />
 
             default:
                 console.log("defaulting");
-                return <MapContainer/>
+                return <PostListContainer/>
 
 
         }
@@ -121,7 +119,7 @@ export default class Main extends React.Component<AppProps, AppState> {
             // case '#/posts':
             //     return <HomePage logoutHandler={this.handleLogout}/>;
             default:
-                return <MapContainer/>;
+                return <HomePage logoutHandler={this.handleLogout}/>;
         }
     }
 
