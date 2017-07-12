@@ -4,12 +4,15 @@ import { WelcomePage } from '../imports/ui/components/WelcomePage';
 import { createContainer } from 'meteor/react-meteor-data';
 import {PostListContainer} from '../imports/ui/containers/PostListContainer';
 import {NotFound} from  '../imports/ui/err/NotFound';
+import Autocomplete from 'react-google-autocomplete';
 
+// import  Script from 'react-load-script';
+// var Script = require('react-load-script').defualt;
+import scriptLoader from 'react-async-script-loader';
 
 
 interface HomepageProps {logoutHandler:any}
 interface HomepageState {page:string}
-
 
 class HomePage extends React.Component<HomepageProps, HomepageState>{
 
@@ -32,7 +35,7 @@ class HomePage extends React.Component<HomepageProps, HomepageState>{
         switch (path){
             case '#/posts':
 
-                return <PostListContainer/>
+                return <PostListContainer/>;
             default:
                 console.log("defaulting");
                 return <PostListContainer/>
@@ -42,12 +45,64 @@ class HomePage extends React.Component<HomepageProps, HomepageState>{
     }
 }
 
-interface AppProps {};
+interface AppProps {}
 interface AppState {userId: any, location: string, transitioning:boolean, loggedIn:boolean}
 
-/*
- Custom setState function that triggers re-render
- */
+
+interface AutoCompleteProps {isScriptLoaded:boolean, isScriptLoadSucceed:boolean}
+interface AutoCompleteState {ready:boolean}
+
+@scriptLoader('https://maps.googleapis.com/maps/api/js?key=AIzaSyBTLq1MW1uKRqxDLPHiYYHVvCCr67EnS0s&libraries=places')
+export class AutoComplete extends React.Component<AutoCompleteProps, AutoCompleteState>{
+
+    constructor(props:any) {
+        super(props);
+        this.state = {ready: false};
+    }
+
+    componentWillReceiveProps (AutoCompleteProps) {
+        const {isScriptLoaded, isScriptLoadSucceed} = AutoCompleteProps;
+        if (isScriptLoaded && !this.props.isScriptLoaded) { // load finished
+            if (isScriptLoadSucceed) {
+                this.setState({ready:true});
+            }
+            else console.log('Autocomplete error');
+        }
+    }
+
+    componentDidMount () {
+        const { isScriptLoaded, isScriptLoadSucceed } = this.props
+        if (isScriptLoaded && isScriptLoadSucceed) {
+            this.setState({ready:true});
+        }
+    }
+
+
+    render() {
+        const output = ! (this.state.ready)? <div>Loading...</div> :
+            <div>Loaded!</div>;
+
+        return (<div>
+                {output}
+            </div>
+        );
+    }
+
+    handleScriptCreate() {
+        console.log('Script created');
+        this.setState({ scriptLoaded: false })
+    }
+
+    handleScriptError() {
+        console.log('Script error');
+        this.setState({ scriptError: true })
+    }
+
+    handleScriptLoad() {
+        console.log('Script loaded');
+        this.setState({ scriptLoaded: true })
+    }
+}
 
 export default class Main extends React.Component<AppProps, AppState> {
 
@@ -84,7 +139,6 @@ export default class Main extends React.Component<AppProps, AppState> {
             this.formCallback);
     }
 
-
     handleLogin(values:any): void{
         const {email, password} = values;
         Meteor.loginWithPassword(email, password, this.formCallback);
@@ -112,17 +166,14 @@ export default class Main extends React.Component<AppProps, AppState> {
                     <WelcomePage handleRegistration={this.handleRegistration} handleLogin={this.handleLogin}/> ;
             // case '#/posts':
             //     return <HomePage logoutHandler={this.handleLogout}/>;
+            case '#/auto':
+                return <AutoComplete/>
             default:
                 return <HomePage logoutHandler={this.handleLogout}/>;
         }
     }
 
 }
-
-// function navigated(){
-//     setState({location: window.location.hash});
-//     ReactDOM.render(route(path), document.getElementById('root'));
-// }
 
 Meteor.startup(() => {
 // Handle the initial route
@@ -131,83 +182,3 @@ Meteor.startup(() => {
 // Handle browser navigation events
 });
 
-// Meteor.startup(() => {
-//     renderApp(window.location.pathname); //render page the first time
-//     window.addEventListener('popstate', function (e) {
-//         //render page when path changes
-//         renderApp(window.location.pathname);
-//     });
-// });
-// import {Router, Route, browserHistory} from 'react-router';
-
-// interface UserProps extends Props<{}> {userID: string; query:string}
-
-// class User extends Component<UserProps,{}> {
-//   render() {
-//     // let { userID } = this.props.params
-//     // let { query } = this.props.location
-//     let  userID  = this.props.userID;
-//     let  query  = this.props.query;
-//     let age = query && query["showAge"] ? '33' : ''
-//
-//     return (
-//       <div className="User">
-//         <h1>User id: {userID}</h1>
-//         {age}
-//       </div>
-//     )
-//   }
-// }
-
-// const HelloMessage = (props) => <div>Hello {props.params.name}</div>;
-//
-// class App extends Component<Props<{}>,{}> {
-//   render() {
-//     return (
-//       <div>
-//         <ul>
-//           <Route path="/" component={Hello} />
-//         </ul>
-//         {this.props.children}
-//       </div>
-//     )
-//   }
-// }
-
-// Meteor.startup(() => {
-// render((
-//   <Router history={browserHistory}>
-//     <Route path="/" component={Hello}/>
-//   </Router>
-// ), document.getElementById('root'))});
-
-// type Props = { user:User, path:string };
-//
-// export default function Main(props: Props) {
-//     return (
-//         <div>
-//             <h1>Header</h1>
-//             {router(props)}
-//             <h1>Footer</h1>
-//         </div>
-//     );
-// }
-//
-// function router(props: Props) {
-//     var {key, param} = parsePath(props.path);
-//     switch (key) {
-//         case '':
-//             return <JobMain/>;
-//         case 'jobMain':
-//             return <JobMain/>;
-//         case 'empMain':
-//             return <Employee type="perm" empId={param}/>;
-//         case 'tempMain':
-//             return <Employee type="temp" empId={param}/>;
-// no need for empId..
-//         case 'admin':
-//             return <Admin user={props.user}/>;
-//         default:
-//             return <NotFound path={props.path}/>;
-//     }
-// }
