@@ -10,6 +10,8 @@ import {AutoCompleteTextbox} from "../imports/ui/forms/subcomponents/AutoComplet
 interface HomepageProps {logoutHandler:any}
 interface HomepageState {page:string}
 
+
+//TODO: refactor on MAC: PostsPage
 class HomePage extends React.Component<HomepageProps, HomepageState>{
 
     constructor(props:any){
@@ -88,7 +90,7 @@ export default class Main extends React.Component<AppProps, AppState> {
             this.formCallback);
     }
 
-    handleLogin(values:any): void{
+    handleLogin(values:any): void {
         const {email, password} = values;
         Meteor.loginWithPassword(email, password, this.formCallback);
     }
@@ -111,18 +113,17 @@ export default class Main extends React.Component<AppProps, AppState> {
         // window.addEventListener('hashchange', navigated, false);
         switch (path) {
             case '#/':
-                return this.state.loggedIn? <HomePage logoutHandler={this.handleLogout}/> :
+                return this.state.loggedIn? this.route('#/posts'):
                     <WelcomePage handleRegistration={this.handleRegistration}
                                  handleLogin={this.handleLogin}/> ;
-            // case '#/posts':
-            //     return <HomePage logoutHandler={this.handleLogout}/>;
+            case '#/posts':
+                 return <HomePage logoutHandler={this.handleLogout}/>;
             case '#/auto':
                 return <AutoCompleteTextbox/>;
             default:
                 return <HomePage logoutHandler={this.handleLogout}/>;
         }
     }
-
 }
 
 Meteor.startup(() => {
