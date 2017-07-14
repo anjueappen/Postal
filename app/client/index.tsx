@@ -4,11 +4,7 @@ import { WelcomePage } from '../imports/ui/components/WelcomePage';
 import { createContainer } from 'meteor/react-meteor-data';
 import {PostListContainer} from '../imports/ui/containers/PostListContainer';
 import {NotFound} from  '../imports/ui/err/NotFound';
-import Autocomplete from 'react-google-autocomplete';
-
-// import  Script from 'react-load-script';
-// var Script = require('react-load-script').defualt;
-import scriptLoader from 'react-async-script-loader';
+import {AutoCompleteTextbox} from "../imports/ui/forms/subcomponents/AutoCompleteTextbox";
 
 
 interface HomepageProps {logoutHandler:any}
@@ -18,9 +14,14 @@ class HomePage extends React.Component<HomepageProps, HomepageState>{
 
     constructor(props:any){
         super(props);
+        this.gotToPage = this.gotToPage.bind(this);
         this.state = {
             page: '#/posts'
         }
+    }
+
+    gotToPage(path:string){
+        this.setState({page: path});
     }
 
     render(){
@@ -34,11 +35,14 @@ class HomePage extends React.Component<HomepageProps, HomepageState>{
     route(path:string){
         switch (path){
             case '#/posts':
-
                 return <PostListContainer/>;
-            default:
+            case '#/trips':
+                return <div>Trips page </div>;
+            case '#/pickup':
+                return <div>Pickup page </div>;
+
                 console.log("defaulting");
-                return <PostListContainer/>
+                return <NotFound/>;
 
 
         }
@@ -49,65 +53,11 @@ interface AppProps {}
 interface AppState {userId: any, location: string, transitioning:boolean, loggedIn:boolean}
 
 
-interface AutoCompleteProps {isScriptLoaded:boolean, isScriptLoadSucceed:boolean}
-interface AutoCompleteState {ready:boolean}
-
-@scriptLoader('https://maps.googleapis.com/maps/api/js?key=AIzaSyBTLq1MW1uKRqxDLPHiYYHVvCCr67EnS0s&libraries=places')
-export class AutoComplete extends React.Component<AutoCompleteProps, AutoCompleteState>{
-
-    constructor(props:any) {
-        super(props);
-        this.state = {ready: false};
-    }
-
-    componentWillReceiveProps (AutoCompleteProps) {
-        const {isScriptLoaded, isScriptLoadSucceed} = AutoCompleteProps;
-        if (isScriptLoaded && !this.props.isScriptLoaded) { // load finished
-            if (isScriptLoadSucceed) {
-                this.setState({ready:true});
-            }
-            else console.log('Autocomplete error');
-        }
-    }
-
-    componentDidMount () {
-        const { isScriptLoaded, isScriptLoadSucceed } = this.props
-        if (isScriptLoaded && isScriptLoadSucceed) {
-            this.setState({ready:true});
-        }
-    }
-
-
-    render() {
-        const output = ! (this.state.ready)? <div>Loading...</div> :
-            <div>Loaded!</div>;
-
-        return (<div>
-                {output}
-            </div>
-        );
-    }
-
-    handleScriptCreate() {
-        console.log('Script created');
-        this.setState({ scriptLoaded: false })
-    }
-
-    handleScriptError() {
-        console.log('Script error');
-        this.setState({ scriptError: true })
-    }
-
-    handleScriptLoad() {
-        console.log('Script loaded');
-        this.setState({ scriptLoaded: true })
-    }
-}
-
 export default class Main extends React.Component<AppProps, AppState> {
 
     constructor(props: any) {
         super(props);
+        // window.addEventListener('hashchange', this.route, false);
         this.state = {
             userId: null,
             location: window.location.hash,
@@ -118,7 +68,6 @@ export default class Main extends React.Component<AppProps, AppState> {
         this.handleLogin = this.handleLogin.bind(this);
         this.handleRegistration = this.handleRegistration.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
-
 
         this.formCallback = this.formCallback.bind(this);
     }
@@ -158,16 +107,17 @@ export default class Main extends React.Component<AppProps, AppState> {
         );
     }
 
-
     route(path: string) {
+        // window.addEventListener('hashchange', navigated, false);
         switch (path) {
             case '#/':
                 return this.state.loggedIn? <HomePage logoutHandler={this.handleLogout}/> :
-                    <WelcomePage handleRegistration={this.handleRegistration} handleLogin={this.handleLogin}/> ;
+                    <WelcomePage handleRegistration={this.handleRegistration}
+                                 handleLogin={this.handleLogin}/> ;
             // case '#/posts':
             //     return <HomePage logoutHandler={this.handleLogout}/>;
             case '#/auto':
-                return <AutoComplete/>
+                return <AutoCompleteTextbox/>;
             default:
                 return <HomePage logoutHandler={this.handleLogout}/>;
         }

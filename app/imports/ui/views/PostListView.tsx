@@ -10,7 +10,6 @@ export class PostListView extends React.Component<PostItemsProps>{
     constructor(props:any){
         super(props);
         this.addPost = this.addPost.bind(this)
-
     }
 
     addPost(){
