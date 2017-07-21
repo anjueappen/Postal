@@ -6,41 +6,18 @@ import {NotFound} from  '../imports/ui/err/NotFound';
 import {AutoCompleteTextbox} from "../imports/ui/forms/subcomponents/AutoCompleteTextbox";
 import {Map} from '../imports/ui/views/Map.tsx';
 
-interface HomepageProps {logoutHandler:any}
-interface HomepageState {page:string}
+interface PostPageProps {logoutHandler:any, routing:any}
+interface PostPageState {}
 
-//TODO: refactor on MAC: PostsPage
-class HomePage extends React.Component<HomepageProps, HomepageState>{
-
-    constructor(props:any){
-        super(props);
-        this.state = {
-            page: '#/posts'
-        }
-    }
+class PostPage extends React.Component<PostPageProps, PostPageState>{
 
     render(){
         return <div>
             <button type="button" onClick={this.props.logoutHandler}> Log Out </button>
+            <button type="button" onClick={() => {window.location.hash = 'map'}}>Route</button>
             <br/>
-            {this.route(this.state.page)}
+            <PostListContainer/>
         </div>
-    }
-
-    route(path:string){
-        switch (path){
-            case '#/posts':
-                return <PostListContainer/>;
-            case '#/trips':
-                return <div>Trips page </div>;
-            case '#/pickup':
-                return <div>Pickup page </div>;
-
-                console.log("defaulting");
-                return <NotFound/>;
-
-
-        }
     }
 }
 
@@ -51,7 +28,6 @@ export default class Main extends React.Component<AppProps, AppState> {
 
     constructor(props: any) {
         super(props);
-        // window.addEventListener('hashchange', this.route, false);
         this.state = {
             userId: null,
             location: window.location.hash,
@@ -64,6 +40,20 @@ export default class Main extends React.Component<AppProps, AppState> {
         this.handleLogout = this.handleLogout.bind(this);
 
         this.formCallback = this.formCallback.bind(this);
+        this.hashRouter = this.hashRouter.bind(this);
+
+    }
+
+    componentDidMount() {
+        window.addEventListener('hashchange', this.hashRouter, false);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('hashchange', this.hashRouter, false);
+    }
+
+    hashRouter(){
+        this.setState({location: window.location.hash});
     }
 
     formCallback(err){
@@ -71,9 +61,6 @@ export default class Main extends React.Component<AppProps, AppState> {
         this.setState({loggedIn: Meteor.userId() != null});
     }
 
-    gotToPage(path:string){
-        this.setState({location: path});
-    }
 
     handleRegistration(values:any):void {
         const {name, email, phone, password} = values;
@@ -108,17 +95,21 @@ export default class Main extends React.Component<AppProps, AppState> {
     route(path: string) {
         switch (path) {
             case '#/':
-                return this.state.loggedIn? this.route('#/posts'):
+                return this.state.loggedIn? this.route('#posts'):
                     <WelcomePage handleRegistration={this.handleRegistration}
                                  handleLogin={this.handleLogin}/> ;
-            case '#/posts':
-                return <HomePage logoutHandler={this.handleLogout}/>;
+            case '#posts':
+                return <PostPage logoutHandler={this.handleLogout} routing={this.gotToPage}/>;
             case '#/auto':
                 return <AutoCompleteTextbox/>;
-            case '#/map':
-                return <Map/>
+            case '#map':
+                return <Map/>;
+            case '#/trips':
+                return <div>Trips page </div>;
+            case '#/pickup':
+                return <div>Pickup page </div>;
             default:
-                return <HomePage logoutHandler={this.handleLogout}/>;
+                return <PostPage logoutHandler={this.handleLogout}/>;
         }
     }
 }
