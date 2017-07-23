@@ -5,6 +5,8 @@ import {PostListContainer} from '../imports/ui/containers/PostListContainer';
 import {NotFound} from  '../imports/ui/err/NotFound';
 import {AutoCompleteTextbox} from "../imports/ui/forms/subcomponents/AutoCompleteTextbox";
 import {Map} from '../imports/ui/views/Map.tsx';
+import SearchBoxExample from "../imports/ui/views/MapWithSearchBox";
+import SearchBoxExample from "../imports/ui/views/MapWithSearchBox";
 
 interface PostPageProps {logoutHandler:any, routing:any}
 interface PostPageState {}
@@ -103,7 +105,7 @@ export default class Main extends React.Component<AppProps, AppState> {
             case '#/auto':
                 return <AutoCompleteTextbox/>;
             case '#map':
-                return <Map/>;
+                return <SearchBoxExample/>;
             case '#/trips':
                 return <div>Trips page </div>;
             case '#/pickup':

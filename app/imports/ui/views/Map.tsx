@@ -1,32 +1,36 @@
 import * as React from 'react';
 import * as _ from 'underscore';
 import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
+import { SearchBox} from "react-google-maps/lib/places/SearchBox";
 import withScriptjs from "react-google-maps/lib/async/withScriptjs";
 
-const GoogleMapComponent = withScriptjs(
-    withGoogleMap(
-        props => (
-            <GoogleMap
-                ref={props.onMapLoad}
-                defaultZoom={3}
-                defaultCenter={{ lat: -25.363882, lng: 131.044922 }}
-                onClick={props.onMapClick}
-            >
-                {props.markers.map(marker => (
-                    <Marker
-                        {...marker}
-                        onRightClick={() => props.onMarkerRightClick(marker)}
-                    />
-                ))}
-            </GoogleMap>
-        )));
+const GoogleMapComponent =
+    withScriptjs(
+        withGoogleMap(
+            props =>
+                <div><SearchBox
+                    inputPlaceholder="Customized your placeholder"
+                    inputStyle={}
+                />
+                    <GoogleMap
+                        ref={props.onMapLoad}
+                        defaultZoom={3}
+                        defaultCenter={{ lat: -25.363882, lng: 131.044922 }}
+                        onClick={props.onMapClick}>
+
+                        {props.markers.map(marker => (<Marker
+                            {...marker}
+                            onRightClick={() => props.onMarkerRightClick(marker)}
+                        />))}
+                    </GoogleMap>
+                </div> ));
 
 
 export class Map extends React.Component<{}, {}> {
 
     render(){
         return <GoogleMapComponent
-            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTLq1MW1uKRqxDLPHiYYHVvCCr67EnS0s"
+            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTLq1MW1uKRqxDLPHiYYHVvCCr67EnS0s&libraries=places"
             loadingElement={<div style={{ height: `100%`, width:`100%` }}>
         <div>Loading ...</div>
       </div>}
