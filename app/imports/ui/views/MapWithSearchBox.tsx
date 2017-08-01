@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {withGoogleMap, GoogleMap, Marker} from "react-google-maps/lib";
 import SearchBox from "react-google-maps/lib/places/SearchBox";
+import scriptLoader from 'react-async-script-loader';
+
 
 const INPUT_STYLE = {
     boxSizing: `border-box`,
@@ -17,7 +19,16 @@ const INPUT_STYLE = {
     textOverflow: `ellipses`,
 };
 
-const SearchBoxExampleGoogleMap = withGoogleMap((props:any) => (
+interface GoogleMapProps {
+    center:any,
+    onMapMounted:any,
+    onBoundsChanged:any,
+    onSearchBoxMounted:any,
+    bounds:any,
+    onPlacesChanged:any,
+    markers:any}
+
+const SearchBoxExampleGoogleMap = withGoogleMap((props:GoogleMapProps) => (
     <GoogleMap
         ref={props.onMapMounted}
         defaultZoom={15}
