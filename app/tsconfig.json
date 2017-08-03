@@ -6,7 +6,7 @@
 		"module": "commonjs",
 		"jsx": "preserve",
 		"moduleResolution": "node",
-		"allowSyntheticDefaultImports": true
-
+		"allowSyntheticDefaultImports": true,
+		"typeRoots" : ["./node_modules/@types/"]
 	}
 }

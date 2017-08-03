@@ -65,12 +65,12 @@ export default class SearchBoxExample extends React.Component<{}, {bounds:any, c
             },
             markers: [],
         };
-    }
+        this.handleMapMounted = this.handleMapMounted.bind(this);
+        this.handleBoundsChanged = this.handleBoundsChanged.bind(this);
+        this.handleSearchBoxMounted = this.handleSearchBoxMounted.bind(this);
+        this.handlePlacesChanged = this.handlePlacesChanged.bind(this);
 
-    handleMapMounted = this.handleMapMounted.bind(this);
-    handleBoundsChanged = this.handleBoundsChanged.bind(this);
-    handleSearchBoxMounted = this.handleSearchBoxMounted.bind(this);
-    handlePlacesChanged = this.handlePlacesChanged.bind(this);
+    }
 
     handleMapMounted(map) {
         this._map = map;
