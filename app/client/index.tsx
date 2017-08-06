@@ -5,8 +5,9 @@ import {PostListContainer} from '../imports/ui/containers/PostListContainer';
 import {NotFound} from  '../imports/ui/err/NotFound';
 import {AutoCompleteTextbox} from "../imports/ui/forms/subcomponents/AutoCompleteTextbox";
 import SearchBoxExample from "../imports/ui/views/MapWithSearchBox";
+import { Accounts } from 'meteor/accounts-base';
 
-interface PostPageProps {logoutHandler:any, routing:any}
+interface PostPageProps {logoutHandler:any}
 interface PostPageState {}
 
 class PostPage extends React.Component<PostPageProps, PostPageState>{
@@ -99,9 +100,9 @@ export default class Main extends React.Component<AppProps, AppState> {
                     <WelcomePage handleRegistration={this.handleRegistration}
                                  handleLogin={this.handleLogin}/> ;
             case '#posts':
-                return <PostPage logoutHandler={this.handleLogout} routing={this.gotToPage}/>;
+                return <PostPage logoutHandler={this.handleLogout} />;
             case '#/auto':
-                return <AutoCompleteTextbox/>;
+                return <AutoCompleteTextbox isScriptLoaded={false} isScriptLoadSucceed={false}/>;
             case '#map':
                 return <SearchBoxExample/>;
             case '#/trips':

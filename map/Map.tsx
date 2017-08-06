@@ -9,7 +9,7 @@ export const MapContainer = createContainer(() => {
         console.log('Map ready');
         loaded
     }
-};, Map);
+}, Map);
 
 
 const class MapContainer {

@@ -1,8 +1,6 @@
 import * as React from 'react';
 import {withGoogleMap, GoogleMap, Marker} from "react-google-maps/lib";
 import SearchBox from "react-google-maps/lib/places/SearchBox";
-import scriptLoader from 'react-async-script-loader';
-
 
 const INPUT_STYLE = {
     boxSizing: `border-box`,
@@ -54,6 +52,8 @@ const SearchBoxExampleGoogleMap = withGoogleMap((props:GoogleMapProps) => (
  * Add <script src="https://maps.googleapis.com/maps/api/js"></script> to your HTML to provide google.maps reference
  */
 export default class SearchBoxExample extends React.Component<{}, {bounds:any, center:any, markers:any}> {
+    _map: any;
+    _searchBox:any;
 
     constructor(props:any){
         super(props);

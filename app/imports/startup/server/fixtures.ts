@@ -1,6 +1,7 @@
 import {DeliveryStatus} from '../../api/interfaces/post';
 import * as _ from 'underscore';
 import {Posts} from "../../api/collections/posts";
+import { Accounts } from 'meteor/accounts-base';
 
 if (Posts.find().count() === 0) {
   let categories = [

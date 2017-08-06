@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { createContainer } from 'meteor/react-meteor-data';
+import { createContainer } from 'react-meteor-data';
 import { PostListView } from '../views/PostListView'
 import {Posts} from "../../api/collections/posts";
 
