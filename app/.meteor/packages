@@ -22,8 +22,5 @@ accounts-base
 react-meteor-data
 accounts-password
 dburles:google-maps
-semantic:ui
-juliancwirko:postcss
 less
 jquery
-semantic:ui-data
