@@ -5,7 +5,7 @@ import { Form, Text } from 'react-form';
 export interface CallbackMethod {(err: any): void}
 export interface FormHandlerMethod {(values: any, callback:CallbackMethod): void }
 
-interface FormProps {submitHandler:FormHandlerMethod};
+export interface FormProps {submitHandler:FormHandlerMethod};
 interface FormState {};
 
 export class RegisterForm extends React.Component<FormProps, FormState>{
