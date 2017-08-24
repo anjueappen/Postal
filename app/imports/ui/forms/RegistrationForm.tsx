@@ -37,7 +37,7 @@ export default class RegistrationForm extends React.Component<FormProps, {userna
                 </div>
                 <div className="six wide column">
                     <div className="ui segment">
-                        <img className="ui image" src="/images/wireframe/image.png">
+                        <img className="ui image" src="/images/wireframe/image.png"/>
                     </div>
                 </div>
                 <div className="column">
@@ -57,8 +57,10 @@ export default class RegistrationForm extends React.Component<FormProps, {userna
                     <div className="ui segment">
                         2
                     </div>
+
                 </div>
             </div>
+        </div>
     }
 
 }

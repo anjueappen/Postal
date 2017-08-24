@@ -6,7 +6,7 @@ import {NotFound} from  '../imports/ui/err/NotFound';
 import {AutoCompleteTextbox} from "../imports/ui/forms/subcomponents/AutoCompleteTextbox";
 import SearchBoxExample from "../imports/ui/views/MapWithSearchBox";
 import { Accounts } from 'meteor/accounts-base';
-import LoginForm from "../imports/ui/forms/LoginForm";
+import {LoginForm} from "../imports/ui/forms/LoginForm";
 
 interface PostPageProps {logoutHandler:any}
 interface PostPageState {}
@@ -110,8 +110,8 @@ export default class Main extends React.Component<AppProps, AppState> {
                 return <div>Trips page </div>;
             case '#pickup':
                 return <div>Pickup page </div>;
-            // case '#sem':
-            //     return <LoginForm submitHandler={this.handleLogin}/>;
+            case '#sem':
+                return <LoginForm />;
             default:
                 return <PostPage logoutHandler={this.handleLogout}/>;
         }
