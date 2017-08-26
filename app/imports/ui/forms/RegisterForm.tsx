@@ -11,7 +11,7 @@ import * as React from 'react';
 import {FormProps} from './WelcomePageForms';
 
 
-export class LoginForm extends React.Component<FormProps, {username:string, password:string}> {
+export class RegisterForm extends React.Component<FormProps, {username:string, password:string}> {
 
     constructor(props:any){
         super(props);

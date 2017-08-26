@@ -25,11 +25,29 @@ export class WelcomePage extends React.Component<WelcomeProps, WelcomeState>{
   }
 
   render(){
-    return <div>
-        <button type="button" onClick={this.toggleFormState}> Toggle</button>
-        {(this.state.formState == 'REGISTER')? <RegisterForm submitHandler={this.props.handleRegistration}/> :
-            <LoginForm submitHandler={this.props.handleLogin}/>}
+    return <div className="ui equal width grid">
+      <div className="ui two row middle aligned grid">
+        <div className="column"></div>
+
+          <div className="six wide column">
+              {(this.state.formState == 'REGISTER')? <RegisterForm submitHandler={this.props.handleRegistration}/> :
+                  <LoginForm submitHandler={this.props.handleLogin}/>}
+          </div>
+
+
+        <div className="column"></div>
+        <div className="ui horizontal divider">
+          Or
+        </div>
+        <div className="center aligned column">
+          <button className="ui big green labeled icon button" onClick={this.toggleFormState}>
+            <i className="signup icon"/>
+              {(this.state.formState == 'REGISTER')?  "Log In" : "Sign up"}
+          </button>
+        </div>
+      </div>
     </div>
+
   }
 }
 
