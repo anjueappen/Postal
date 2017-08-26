@@ -11,53 +11,62 @@ import * as React from 'react';
 import {FormProps} from '../forms/WelcomePageForms';
 
 
-// export class LoginForm extends React.Component<FormProps, {username:string, password:string}> {
-export class LoginForm extends React.Component<{}, {}> {
+export class LoginForm extends React.Component<FormProps, {username:string, password:string}> {
+// export class LoginForm extends React.Component<{}, {}> {
+
+    constructor(props:any){
+        super(props);
+
+        this.state = {
+            username: "",
+            password: ""
+        }
+    }
 
 
-
-    // login(){
-    //     this.props.submitHandler({email: this.state.username,
-    //         password: this.state.password})
-    // }
+    login(){
+        this.props.submitHandler({email: this.state.username,
+            password: this.state.password})
+    }
 
     render(){
-        return <div className="ui equal width grid">
-            <div className="stretched row">
-                <div className="column">
-                </div>
-                <div className="six wide column ">
-                    <div className="ui center aligned segment">
+        return(
+            <div className="ui equal width grid">
+                <div className="ui two row middle aligned grid">
+                    <div className="column"></div>
 
-                        <div className="row">
-                            <div className="ui left icon input">
-                                <input type="text" placeholder="Username"/>
-                                <i className="user icon"/>
+                    <div className="five wide column">
+                        <form className="ui form" onSubmit={this.login}>
+                            <div className="field">
+                                <label>Username</label>
+                                <div className="ui left icon input">
+                                    <i className="user icon"/>
+                                    <input type="text" placeholder="Username" onChange={(e) => this.setState({username: e.target.value})}/>
+                                </div>
                             </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="ui left icon input">
-                                <input type="text" placeholder="Password"/>
-                                <i className="lock icon"/>
+                            <div className="field">
+                                <label>Password</label>
+                                <div className="ui left icon input">
+                                    <i className="lock icon"/>
+                                    <input type="password" onChange={(e) => this.setState({password: e.target.value})}/>
+                                </div>
                             </div>
-                        </div>
+                            <button className="ui blue submit button" type="submit">Login</button>
+                        </form>
+                    </div>
 
-                        <div className="row">
-                            <button className="ui teal right  icon button">
-                                Login
-                                <i className="caret right icon"/>
-                            </button>
+                    <div className="column"></div>
+                    <div className="ui horizontal divider">
+                        Or
+                    </div>
+                    <div className="center aligned column">
+                        <div className="ui big green labeled icon button">
+                            <i className="signup icon"/>
+                            Sign Up
                         </div>
-
-                        {/*<img className="ui image" src="/images/wireframe/image.png"/>*/}
                     </div>
                 </div>
-                <div className="column">
-
-                </div>
-            </div>
-        </div>
+            </div>)
     }
 
 }

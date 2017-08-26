@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {RegisterForm, LoginForm, FormHandlerMethod} from "../forms/WelcomePageForms";
+import {RegisterForm, FormHandlerMethod} from "../forms/WelcomePageForms";
+import {LoginForm} from "../forms/LoginForm";
 
 interface WelcomeProps {handleRegistration: FormHandlerMethod, handleLogin: FormHandlerMethod};
 interface WelcomeState {formState: string, loggedIn:boolean};

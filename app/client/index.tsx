@@ -110,8 +110,8 @@ export default class Main extends React.Component<AppProps, AppState> {
                 return <div>Trips page </div>;
             case '#pickup':
                 return <div>Pickup page </div>;
-            case '#sem':
-                return <LoginForm />;
+            // case '#sem':
+            //     return <LoginForm />;
             default:
                 return <PostPage logoutHandler={this.handleLogout}/>;
         }
