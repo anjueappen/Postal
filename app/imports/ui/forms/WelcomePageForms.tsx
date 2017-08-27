@@ -3,7 +3,7 @@ import { Form, Text } from 'react-form';
 
 
 export interface CallbackMethod {(err: any): void}
-export interface FormHandlerMethod {(values: any, callback:CallbackMethod): void }
+export interface FormHandlerMethod {(values: any): void }
 
 export interface FormProps {submitHandler:FormHandlerMethod};
 interface FormState {};
