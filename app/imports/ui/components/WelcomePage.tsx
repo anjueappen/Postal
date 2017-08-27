@@ -11,7 +11,7 @@ export class WelcomePage extends React.Component<WelcomeProps, WelcomeState>{
     super(props);
     console.log('Creating component')
 
-    this.state = {formState: 'REGISTER', loggedIn:false};
+    this.state = {formState: 'LOGIN', loggedIn:false};
     this.toggleFormState = this.toggleFormState.bind(this);
 
   }

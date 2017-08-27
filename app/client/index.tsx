@@ -61,6 +61,7 @@ export default class Main extends React.Component<AppProps, AppState> {
     formCallback(err){
         (err) ? console.log(err) :  console.log('Success', Meteor.userId());
         this.setState({loggedIn: Meteor.userId() != null});
+        window.location.hash = this.state.loggedIn? 'posts': '/';
     }
 
 
@@ -81,7 +82,9 @@ export default class Main extends React.Component<AppProps, AppState> {
     }
 
     handleLogout():void{
+
         Meteor.logout(this.formCallback);
+
     }
 
     render() {
@@ -97,8 +100,7 @@ export default class Main extends React.Component<AppProps, AppState> {
     route(path: string) {
         switch (path) {
             case '#/':
-                return this.state.loggedIn? this.route('#posts'):
-                    <WelcomePage handleRegistration={this.handleRegistration}
+                return <WelcomePage handleRegistration={this.handleRegistration}
                                  handleLogin={this.handleLogin}/> ;
             case '#posts':
                 return <PostPage logoutHandler={this.handleLogout} />;
