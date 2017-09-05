@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {withGoogleMap, GoogleMap, Marker} from "react-google-maps/lib";
+import {withGoogleMap, GoogleMap, Marker, OverlayView} from "react-google-maps/lib";
 import SearchBox from "react-google-maps/lib/places/SearchBox";
 
 const INPUT_STYLE = {
@@ -17,6 +17,8 @@ const INPUT_STYLE = {
     textOverflow: `ellipses`,
 };
 
+const NO_STYLE = {};
+
 interface GoogleMapProps {
     center:any,
     onMapMounted:any,
@@ -26,7 +28,7 @@ interface GoogleMapProps {
     onPlacesChanged:any,
     markers:any}
 
-const SearchBoxExampleGoogleMap = withGoogleMap((props:GoogleMapProps) => (
+const SearchBoxGoogleMap = withGoogleMap((props:GoogleMapProps) => (
     <GoogleMap
         ref={props.onMapMounted}
         defaultZoom={15}
@@ -35,14 +37,15 @@ const SearchBoxExampleGoogleMap = withGoogleMap((props:GoogleMapProps) => (
         <SearchBox
             ref={props.onSearchBoxMounted}
             bounds={props.bounds}
-            controlPosition={google.maps.ControlPosition.TOP_LEFT}
+            controlPosition={google.maps.ControlPosition.TOP_CENTER}
             onPlacesChanged={props.onPlacesChanged}
-            inputPlaceholder="Send mail to.."
+            inputPlaceholder="Send mail to..."
             inputStyle={INPUT_STYLE}
         />
         {props.markers.map((marker, index) => (
             <Marker position={marker.position} key={index} />
         ))}
+
     </GoogleMap>
 ));
 
@@ -51,7 +54,7 @@ const SearchBoxExampleGoogleMap = withGoogleMap((props:GoogleMapProps) => (
  *
  * Add <script src="https://maps.googleapis.com/maps/api/js"></script> to your HTML to provide google.maps reference
  */
-export default class SearchBoxExample extends React.Component<{}, {bounds:any, center:any, markers:any}> {
+export default class GoogleMapWithSearchBox extends React.Component<{}, {bounds:any, center:any, markers:any}> {
     _map: any;
     _searchBox:any;
 
@@ -106,7 +109,7 @@ export default class SearchBoxExample extends React.Component<{}, {bounds:any, c
 
     render() {
         return (
-            <SearchBoxExampleGoogleMap
+            <SearchBoxGoogleMap
                 containerElement={<div style={{ height: `500px` }} />}
                 mapElement={<div style={{ height: `500px` }} />}
                 center={this.state.center}
@@ -116,7 +119,13 @@ export default class SearchBoxExample extends React.Component<{}, {bounds:any, c
                 bounds={this.state.bounds}
                 onPlacesChanged={this.handlePlacesChanged}
                 markers={this.state.markers}
-            />
+            >        <div className="ui animated button" >
+                <div className="visible content">Next</div>
+                <div className="hidden content">
+                    <i className="right arrow icon"/>
+                </div>
+            </div>
+            </SearchBoxGoogleMap>
         );
     }
 }

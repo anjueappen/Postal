@@ -4,7 +4,8 @@ import { WelcomePage } from '../imports/ui/components/WelcomePage';
 import {PostListContainer} from '../imports/ui/containers/PostListContainer';
 import {NotFound} from  '../imports/ui/err/NotFound';
 import {AutoCompleteTextbox} from "../imports/ui/forms/subcomponents/AutoCompleteTextbox";
-import SearchBoxExample from "../imports/ui/views/MapWithSearchBox";
+import GoogleMapWithSearchBox from "../imports/ui/views/MapWithSearchBox";
+import {Map} from "../imports/ui/views/BasicMap";
 import { Accounts } from 'meteor/accounts-base';
 import {LoginForm} from "../imports/ui/forms/LoginForm";
 
@@ -16,7 +17,6 @@ class PostPage extends React.Component<PostPageProps, PostPageState>{
     render(){
         return <div>
             <button type="button" onClick={this.props.logoutHandler}> Log Out </button>
-            <button type="button" onClick={() => {window.location.hash = 'map'}}>Route</button>
             <br/>
             <PostListContainer/>
         </div>
@@ -82,17 +82,15 @@ export default class Main extends React.Component<AppProps, AppState> {
     }
 
     handleLogout():void{
-
         Meteor.logout(this.formCallback);
-
     }
 
     render() {
         return (
             <div>
-                <h1>Header goes here</h1>
+                {/*<h1>Header goes here</h1>*/}
                 {this.route(this.state.location)}
-                <h1>Footer</h1>
+                {/*<h1>Footer</h1>*/}
             </div>
         );
     }
@@ -107,7 +105,7 @@ export default class Main extends React.Component<AppProps, AppState> {
             case '#auto':
                 return <AutoCompleteTextbox isScriptLoaded={false} isScriptLoadSucceed={false}/>;
             case '#map':
-                return <SearchBoxExample/>;
+                return <Map/>;
             case '#trips':
                 return <div>Trips page </div>;
             case '#pickup':

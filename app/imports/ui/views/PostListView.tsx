@@ -34,8 +34,28 @@ export class PostListView extends React.Component<PostItemsProps>{
         return <div>
             <button type="button" onClick={this.addPost}> Add post item </button>
             <ul>{p}</ul>
+
+            <div className="ui center aligned basic segment">
+                <div className="ui left icon action input">
+                    <i className="search icon"/>
+                    <input type="text" placeholder="Order #"/>
+                    <div className="ui blue submit button">Search</div>
+                </div>
+                <div className="ui horizontal divider">
+                    Or
+                </div>
+                <div className="ui teal labeled icon button">
+                    Create New Order
+                    <i className="add icon"/>
+                </div>
+            </div>
         </div>
     }
 }
 
 
+
+/*
+
+
+ */
