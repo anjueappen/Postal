@@ -1,38 +1,43 @@
 import * as React from 'react';
-import {PostItem} from "../components/PostItem";
+import {PostItemComponent} from "../components/PostItem";
+import {Post} from "../../api/interfaces/post";
 
 interface PostItemsProps {
-    loading:boolean,
-    postExists:boolean,
-    posts:PostItem[],
+    loading: boolean,
+    postExists: boolean,
+    posts: PostItemComponent[],
 }
 
-export class PostListView extends React.Component<PostItemsProps>{
-    name:string;
+export class PostListView extends React.Component<PostItemsProps> {
+    name: string;
     deliveryStatus: any;
-    
-    constructor(props:any){
+
+    constructor(props: any) {
         super(props);
         this.addPost = this.addPost.bind(this)
     }
 
-    addPost(){
+    addPost() {
         console.log("Adding post");
     }
 
-    render(){
+    render() {
         console.log(this.props);
-        if(this.props.loading){
+        if (this.props.loading) {
             return <div>Loading...</div>
         }
 
         // var posts = Posts.find({senderIdentifier: Meteor.userId()});
-        // var p = posts.map((post) => {return <li><PostItem name={post.name} deliveryStatus={post.deliveryStatus} /></li>});
+        // var p = posts.map((post) => {return <li><PostItemComponent name={post.name} deliveryStatus={post.deliveryStatus} /></li>});
 
-        let p = this.props.posts.map((post) => {return <li><PostItem name={post.name}
-                                                                     deliveryStatus={post.deliveryStatus}/></li>});
+        let p = this.props.posts.map((post: Post) => {
+            return <li><PostItemComponent name={post.name}
+                                          deliveryStatus={post.deliveryStatus.toLocaleString()}
+                                          destination="New York, NY"
+            /></li>
+        });
         return <div>
-            <button type="button" onClick={this.addPost}> Add post item </button>
+            <button type="button" onClick={this.addPost}> Add post item</button>
             <ul>{p}</ul>
 
             <div className="ui center aligned basic segment">
@@ -52,7 +57,6 @@ export class PostListView extends React.Component<PostItemsProps>{
         </div>
     }
 }
-
 
 
 /*

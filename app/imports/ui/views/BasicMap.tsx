@@ -102,7 +102,7 @@ export class Map extends React.Component<{}, {}> {
         return (
             <div>
                 <button onClick={this.panToArcDeTriomphe}>Go to Arc De Triomphe</button>
-                <input id="pac-input" className="controls" type="text" placeholder="Search Box"/>
+                <input id="pac-input" className="ui input" type="text" placeholder="Search Box"/>
                 <div ref="map" style={mapStyle}> Loading... </div>
             </div>
         );

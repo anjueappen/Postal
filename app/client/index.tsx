@@ -1,13 +1,10 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { WelcomePage } from '../imports/ui/components/WelcomePage';
-import {PostListContainer} from '../imports/ui/containers/PostListContainer';
-import {NotFound} from  '../imports/ui/err/NotFound';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import {WelcomePage} from "../imports/ui/components/WelcomePage";
+import {PostListContainer} from "../imports/ui/containers/PostListContainer";
 import {AutoCompleteTextbox} from "../imports/ui/forms/subcomponents/AutoCompleteTextbox";
-import GoogleMapWithSearchBox from "../imports/ui/views/MapWithSearchBox";
-import {Map} from "../imports/ui/views/BasicMap";
-import { Accounts } from 'meteor/accounts-base';
-import {LoginForm} from "../imports/ui/forms/LoginForm";
+import {Accounts} from "meteor/accounts-base";
+import {AddressFillComponent} from "../imports/ui/forms/AddressFillComponent";
 
 interface PostPageProps {logoutHandler:any}
 interface PostPageState {}
@@ -105,7 +102,7 @@ export default class Main extends React.Component<AppProps, AppState> {
             case '#auto':
                 return <AutoCompleteTextbox isScriptLoaded={false} isScriptLoadSucceed={false}/>;
             case '#map':
-                return <Map/>;
+                return <AddressFillComponent/>;
             case '#trips':
                 return <div>Trips page </div>;
             case '#pickup':
